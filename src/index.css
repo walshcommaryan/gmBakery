@@ -1,3 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +15,24 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+@font-face {
+  font-family: 'Epilogue';
+  src: url('/public/assets/fonts/Epilogue-Light.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+.btn-checkout {
+  @apply outline outline-offset-8 outline-1 focus:outline-none focus:outline-gray-600
+}
+
+.hero-text {
+  @apply text-4xl sm:text-6xl lg:text-7xl xl:text-8xl text-white
+}
+
+.hero-text-sm {
+  @apply text-xl sm:text-2xl lg:text-3xl xl:text-4xl text-white
 }
