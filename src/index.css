@@ -36,3 +36,13 @@ code {
 .hero-text-sm {
   @apply text-xl sm:text-2xl lg:text-3xl xl:text-4xl text-white
 }
+
+.rounded-square-w {
+  @apply w-[70%] bg-white border rounded-3xl px-10 py-10;
+
+} 
+
+.rounded-square-h {
+  @apply bg-blue-500 border rounded-3xl
+}
+

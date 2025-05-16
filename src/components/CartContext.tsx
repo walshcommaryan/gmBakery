@@ -2,22 +2,25 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 type CartItem = {
   name: string;
+  price: number;
   quantity: number;
 };
 
 type CartContextType = {
   cart: Record<string, CartItem>;
-  addItem: (name: string) => void;
-  removeItem: (name: string) => void;
+  addItem: (name: string, price: number) => void;
+  removeItem: (name: string, price: number) => void;
   getItemQuantity: (name: string) => number;
   getTotalQuantity: () => number;
   clearCart: () => void;
+  getTotalPrice: () => number;
 };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [cart, setCart] = useState<Record<string, CartItem>>({});
+  const [totalPrice, setTotalPrice] = useState<number>(0);
     
     // Restore cart on load
     useEffect(() => {
@@ -33,31 +36,36 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     }, [cart]);
 
 
-    const addItem = (name: string) => {
-        setCart((prev) => ({
-        ...prev,
-        [name]: {
-            name,
-            quantity: (prev[name]?.quantity ?? 0) + 1,
-        },
-        }));
+    const addItem = (name: string, price: number) => {
+      setTotalPrice((total) => total + price);
+
+      setCart((prev) => ({
+      ...prev,
+      [name]: {
+          name,
+          price: (prev[name]?.price ?? 0) + price,
+          quantity: (prev[name]?.quantity ?? 0) + 1,
+      },
+      }));
     };
 
-    const removeItem = (name: string) => {
+    const removeItem = (name: string, price: number) => {
+      setTotalPrice((total) => total - price);
       setCart((prev) => {
       const updatedCart = { ...prev };
 
-      if (updatedCart[name]) {
-        updatedCart[name] = {
-          ...updatedCart[name],
-          quantity: updatedCart[name].quantity - 1,
-        };
+        if (updatedCart[name]) {
+          updatedCart[name] = {
+            ...updatedCart[name],
+            price: updatedCart[name].price - price,
+            quantity: updatedCart[name].quantity - 1,
+          };
 
-        // Optional: remove item completely if quantity <= 0
-        if (updatedCart[name].quantity <= 0) {
-          delete updatedCart[name];
+          // Optional: remove item completely if quantity <= 0
+          if (updatedCart[name].quantity <= 0) {
+            delete updatedCart[name];
+          }
         }
-      }
 
         return updatedCart;
       });
@@ -72,12 +80,17 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         return Object.values(cart).reduce((acc, item) => acc + item.quantity, 0);
     };
 
+    const getTotalPrice = () => {
+      return totalPrice;
+    }
+
     const clearCart = () => {
-        setCart({});
+      setTotalPrice(0);
+      setCart({});
     }
 
   return (
-    <CartContext.Provider value={{ cart, addItem, removeItem, getItemQuantity, getTotalQuantity, clearCart }}>
+    <CartContext.Provider value={{ cart, addItem, removeItem, getItemQuantity, getTotalQuantity, getTotalPrice, clearCart }}>
       {children}
     </CartContext.Provider>
   );

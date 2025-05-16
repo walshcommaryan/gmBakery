@@ -2,19 +2,19 @@
 const featuredBase = [
   {
     name: 'Apple Tart',
-    price: '$6',
+    price: 6.99,
     itemImage: '/assets/images/apple_tart.png',
     plateImage: '/assets/images/display_circle.png',
   },
   {
     name: 'Tart',
-    price: '$5',
+    price: 5.99,
     itemImage: '/assets/images/tart.png',
     plateImage: '/assets/images/display_circle.png',
   },
   {
     name: 'Madeleines',
-    price: '$3',
+    price: 3.99,
     itemImage: '/assets/images/madeleines.png',
     plateImage: '/assets/images/display_circle.png',
   },
@@ -23,31 +23,31 @@ const featuredBase = [
 const productBase = [
   {
     name: 'Lemon Tart',
-    price: '$6',
+    price: 5.99,
     itemImage: '/assets/images/lemon_tart.png',
     plateImage: '/assets/images/display_circle.png',
   },
   {
     name: 'Macaron',
-    price: '$2',
+    price: 2.99,
     itemImage: '/assets/images/macaron.png',
     plateImage: '/assets/images/display_circle.png',
   },
   {
     name: 'Apple Tart',
-    price: '$6',
+    price: 6.99,
     itemImage: '/assets/images/apple_tart.png',
     plateImage: '/assets/images/display_circle.png',
   },
   {
     name: 'Tart',
-    price: '$5',
+    price: 5.99,
     itemImage: '/assets/images/tart.png',
     plateImage: '/assets/images/display_circle.png',
   },
   {
     name: 'Madeleines',
-    price: '$3',
+    price: 3.99,
     itemImage: '/assets/images/madeleines.png',
     plateImage: '/assets/images/display_circle.png',
   },

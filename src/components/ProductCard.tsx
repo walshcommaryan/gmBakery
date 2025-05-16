@@ -5,7 +5,7 @@ import Counter from './Counter';
 
 export type ProductCardProps = {
   name: string;
-  price: string;
+  price: number;
   itemImage: string;
   plateImage: string;
   sizeClass: string;
@@ -27,11 +27,15 @@ const ProductCard = ({ name, price, itemImage, plateImage, sizeClass }: ProductC
       >
       {/* Relative container for bakery item and text */}
       <div className='relative'>
-        {/* Bakery item with sizeClass */}
-        <BakeryItem itemImage={itemImage} plateImage={plateImage} sizeClass={sizeClass} />
 
         {/* Badge for Counter */}
-        <Counter name={name} />
+        <div className='flex justify-end'>
+          <Counter name={name} price={price} />
+        </div>
+        
+
+        {/* Bakery item with sizeClass */}
+        <BakeryItem itemImage={itemImage} plateImage={plateImage} sizeClass={sizeClass} />
 
         {/* Dynamically positioned text */}
         <div
@@ -49,7 +53,7 @@ const ProductCard = ({ name, price, itemImage, plateImage, sizeClass }: ProductC
           {/* Name */}
           <h2 className='text-lg md:text-xl font-semibold'>{name}</h2>
           {/* Price */}
-          <p className='text-gray-500'>{price}</p>
+          <p className='text-gray-500'>$ {price}</p>
         </div>
       </div>
     </motion.div>
