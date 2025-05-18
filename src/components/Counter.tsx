@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useCart } from './CartContext';
+import { useCart } from '../context/CartContext';
 import { useAnimate } from 'framer-motion';
 
 interface CounterProps {

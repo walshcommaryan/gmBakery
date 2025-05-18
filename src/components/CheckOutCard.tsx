@@ -1,7 +1,7 @@
 import React from 'react'
 import { ProductCardProps } from './ProductCard';
 import Counter from './Counter';
-import { useCart } from './CartContext'
+import { useCart } from '../context/CartContext'
 
 const CheckOutCard = ({ name, price, itemImage, plateImage, sizeClass}: ProductCardProps) => {
     const { getItemQuantity } = useCart();

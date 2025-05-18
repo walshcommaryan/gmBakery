@@ -1,7 +1,7 @@
 import React from 'react'
 import { ProductCardProps } from './ProductCard';
 import CheckOutCard from './CheckOutCard';
-import { useCart } from './CartContext'
+import { useCart } from '../context/CartContext'
 
 interface CheckoutGridProps {
   items: ProductCardProps[]; // This defines items as an array of ProductCardProps
