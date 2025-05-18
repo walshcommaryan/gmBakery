@@ -11,7 +11,6 @@ const ProductGrid = ({ items, columns}: ProductGridProps) => {
 
   // Map numbers to classNames explicitly
   const getColsClass = (prefix: string, count: number) => {
-    console.log(prefix, count);
     return `${prefix}:grid-cols-${count}`;
   };
   return (

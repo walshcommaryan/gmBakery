@@ -46,3 +46,7 @@ code {
   @apply bg-blue-500 border rounded-3xl
 }
 
+.login-field {
+  @apply p-2 border rounded bg-white
+}
+

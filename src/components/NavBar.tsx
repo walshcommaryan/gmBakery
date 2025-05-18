@@ -13,7 +13,7 @@ const NavBar = () => {
       <div className="flex flex-row gap-8 items-center">
         {user ? (
           <>
-            <span>Welcome, {user.firstName}</span>
+            <span>Welcome, {user.first_name}</span>
             <button className="btn-checkout" onClick={logout}>
               Logout
             </button>

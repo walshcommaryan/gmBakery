@@ -1,10 +1,10 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { login as apiLogin, getMe } from '../api/auth';
+import { login as apiLogin, register as apiRegister, getMe, logout as apiLogout } from '../api/auth';
 
 interface User {
   customer_id: number;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string;
   phone?: string;
   created_at?: string;
@@ -14,7 +14,8 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   error: string | null;
-  login: (email: string, password: string) => Promise<void>;
+  register: (first_name: string, last_name: string, email: string, password: string, phone?: string) => Promise<boolean>;
+  login: (email: string, password: string) => Promise<boolean>;
   logout: () => void;
 }
 
@@ -38,28 +39,63 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setLoading(false);
   }, []);
 
-  const login = async (email: string, password: string) => {
+  const normalizeUser = (data: any): User => ({
+    customer_id: data.customer_id,
+    first_name: data.first_name,
+    last_name: data.last_name,
+    email: data.email,
+    phone: data.phone,
+    created_at: data.created_at,
+  });
+
+  const register = async (
+    first_name: string, 
+    last_name: string, 
+    email: string, 
+    password: string,
+    phone?: string) => {
+    setError(null);
+    try {
+      await apiRegister(first_name, last_name, email, password, phone);
+      const res = await getMe();
+      setUser(normalizeUser(res.data));
+      setLoading(false);
+      return true; // success
+    } catch (err) {
+      setError('Invalid email or password');
+      setUser(null);
+      setLoading(false);
+      return false; // failure
+    }
+  }
+
+
+  const login = async (email: string, password: string): Promise<boolean> => {
     setLoading(true);
     setError(null);
     try {
       await apiLogin(email, password);
       const res = await getMe();
-      setUser(res.data);
+      setUser(normalizeUser(res.data));
+      setLoading(false);
+      return true; // success
     } catch (err) {
       setError('Invalid email or password');
       setUser(null);
-    } finally {
       setLoading(false);
+      return false; // failure
     }
   };
 
-  const logout = () => {
+
+
+  const logout = async () => {
     setUser(null);
-    // Optionally, tell backend to clear cookie here if you have a logout API
+    await apiLogout();
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, error, login, logout }}>
+    <AuthContext.Provider value={{ user, loading, error, register, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
