@@ -1,18 +1,21 @@
 // Example bakery items data
 const featuredBase = [
   {
+    product_id: 1,
     name: 'Apple Tart',
     price: 6.99,
     itemImage: '/assets/images/apple_tart.png',
     plateImage: '/assets/images/display_circle.png',
   },
   {
+    product_id: 1,
     name: 'Tart',
     price: 5.99,
     itemImage: '/assets/images/tart.png',
     plateImage: '/assets/images/display_circle.png',
   },
   {
+    product_id: 2,
     name: 'Madeleines',
     price: 3.99,
     itemImage: '/assets/images/madeleines.png',
@@ -22,30 +25,35 @@ const featuredBase = [
 
 const productBase = [
   {
+    product_id: 3,
     name: 'Lemon Tart',
     price: 5.99,
     itemImage: '/assets/images/lemon_tart.png',
     plateImage: '/assets/images/display_circle.png',
   },
   {
+    product_id: 4,
     name: 'Macaron',
     price: 2.99,
     itemImage: '/assets/images/macaron.png',
     plateImage: '/assets/images/display_circle.png',
   },
   {
+    product_id: 5,
     name: 'Apple Tart',
     price: 6.99,
     itemImage: '/assets/images/apple_tart.png',
     plateImage: '/assets/images/display_circle.png',
   },
   {
+    product_id: 1,
     name: 'Tart',
     price: 5.99,
     itemImage: '/assets/images/tart.png',
     plateImage: '/assets/images/display_circle.png',
   },
   {
+    product_id: 2,
     name: 'Madeleines',
     price: 3.99,
     itemImage: '/assets/images/madeleines.png',

@@ -28,6 +28,7 @@ const ProductGrid = ({ items, columns}: ProductGridProps) => {
           <ProductCard
             key={item.name}
             name={item.name}
+            product_id={item.product_id}
             price={item.price}
             itemImage={item.itemImage}
             plateImage={item.plateImage}

@@ -9,7 +9,7 @@ type BakeryItemProps = {
 const BakeryItem = ({ itemImage, plateImage, sizeClass }: BakeryItemProps) => {
   return (
     <div className={`relative ${sizeClass}`}>
-      <img src={plateImage} alt='Plate' className='w-full h-full object-contain drop-shadow-2xl' />
+      <img src={plateImage} alt='Plate' className='w-full h-full object-contain drop-shadow-2xl pointer-events-none' />
       <img
         src={itemImage}
         alt='Pastry'

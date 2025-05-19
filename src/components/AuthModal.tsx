@@ -5,10 +5,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 interface AuthModalProps {
   isOpen: boolean;
   onClose: () => void;
+  loginRequired?: boolean;  // <-- new prop
 }
 
-const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
-  // Declare hooks first
+const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, loginRequired }) => {
   const { login, register, error } = useAuth();
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
@@ -19,65 +19,67 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const [loading, setLoading] = useState(false);
   const [localError, setLocalError] = useState<string | null>(null);
 
-  // Now your useEffect is always called, no matter what
   useEffect(() => {
     if (error) {
       setLocalError(error);
     }
   }, [error]);
 
-    // Early return after hooks are declared
   if (!isOpen) return null;
 
   const clearInputs = () => {
-    // Clear email and password fields after submit attempt for security
     setEmail('');
     setPassword('');
     setFirstName('');
     setLastName('');
     setPhone('');
-  }
+  };
 
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setLocalError(null);
-  setLoading(true);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLocalError(null);
+    setLoading(true);
 
-  await new Promise((res) => setTimeout(res, 1500));
+    await new Promise((res) => setTimeout(res, 1500));
 
-  let success = false;
+    let success = false;
 
-  if (isLogin) {
-    success = await login(email, password);
-  } else {
-    success = await register(firstName, lastName, email, password, phone);
-  }
+    if (isLogin) {
+      success = await login(email, password);
+    } else {
+      success = await register(firstName, lastName, email, password, phone);
+    }
 
-  if (success) {
-    onClose();
-  } else {
-    setLocalError(isLogin ? 'Invalid email or password' : 'Registration failed');
-  }
+    if (success) {
+      onClose();
+    } else {
+      setLocalError(isLogin ? 'Invalid email or password' : 'Registration failed');
+    }
 
-  clearInputs();
-  setLoading(false);
-};
+    clearInputs();
+    setLoading(false);
+  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
       <div className="bg-white p-8 rounded shadow-md w-full max-w-sm">
+        {loginRequired && (
+          <p className="text-red-600 font-bold mb-4 text-center">
+            You must login first to proceed to checkout.
+          </p>
+        )}
         <h2 className="text-xl font-bold mb-4 text-center">
           {isLogin ? 'Login' : 'Register'}
         </h2>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          {isLogin ? null : (
+          {!isLogin && (
             <>
               <input
                 type="text"
                 placeholder="First Name"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
-                required={!isLogin}
+                required
                 className="login-field"
                 disabled={loading}
               />
@@ -86,7 +88,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                 placeholder="Last Name"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
-                required={!isLogin}
+                required
                 className="login-field"
                 disabled={loading}
               />

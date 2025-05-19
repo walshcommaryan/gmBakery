@@ -10,13 +10,14 @@ interface CheckoutGridProps {
 const CheckOutGrid: React.FC<CheckoutGridProps> = ({ items }) => {
     const { getItemQuantity } = useCart();
     return (
-        <div className='grid gap-4 grid-cols-1'>
+        <div className='grid gap-4 px-2 sm:px-4'>
             {items
             .filter((item) => getItemQuantity(item.name) > 0)
             .map((item) => (
                 <CheckOutCard
                     key={item.name}
                     name={item.name}
+                    product_id={item.product_id}
                     price={item.price}
                     itemImage={item.itemImage}
                     plateImage={item.plateImage}

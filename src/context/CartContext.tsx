@@ -1,19 +1,25 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { updateCartItem, fetchCart, clearItemsInCart, mergeGuestCart } from '../api/Cart';
+import { useAuth } from './AuthContext'; // make sure path is correct
+
 
 type CartItem = {
   name: string;
   price: number;
   quantity: number;
+  product_id: number;
 };
+
 
 type CartContextType = {
   cart: Record<string, CartItem>;
-  addItem: (name: string, price: number) => void;
-  removeItem: (name: string, price: number) => void;
+  addItem: (name: string, price: number, productId: number) => void;
+  removeItem: (name: string, price: number, productId: number) => void;
   getItemQuantity: (name: string) => number;
   getTotalQuantity: () => number;
-  clearCart: () => void;
+  clearCart: (db: boolean) => void;
   getTotalPrice: () => number;
+  getTotalQty: () => number;
 };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -21,54 +27,115 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [cart, setCart] = useState<Record<string, CartItem>>({});
   const [totalPrice, setTotalPrice] = useState<number>(0);
+  const { user } = useAuth();
     
     // Restore cart on load
     useEffect(() => {
-        const storedCart = localStorage.getItem('cart');
-        if (storedCart) {
-          setCart(JSON.parse(storedCart));
+  const syncCartAfterLogin = async () => {
+    if (!user) return;
+
+    // 1. Convert guest cart to API format
+    const guestCartItems = Object.entries(cart).map(([_, item]) => ({
+      product_id: item.product_id, // you'll need to store this in CartItem
+      quantity: item.quantity,
+    }));
+
+    try {
+      if (guestCartItems.length > 0) {
+        // 2. Send guest cart to backend for merging
+        await mergeGuestCart(guestCartItems);
+      }
+
+      // 3. Fetch final backend cart
+      const response = await fetchCart();
+      const backendCart = response.items || [];
+
+      const formattedCart: Record<string, CartItem> = {};
+      backendCart.forEach((item: any) => {
+        formattedCart[item.name] = {
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+          product_id: item.product_id, // ensure you store this
+        };
+      });
+
+      setCart(formattedCart);
+
+      const total = backendCart.reduce(
+        (sum: number, item: any) => sum + item.price * item.quantity,
+        0
+      );
+      setTotalPrice(total);
+    } catch (error) {
+      console.error('Failed to sync cart after login', error);
+    }
+  };
+
+  syncCartAfterLogin();
+}, [user]);
+
+
+
+
+    const addItem = async (name: string, price: number, product_id: number) => {
+      // Determine current quantity
+      const currentQuantity = cart[name]?.quantity ?? 0;
+      const newQuantity = currentQuantity + 1;
+
+      try {
+        // Call backend API to update quantity
+        if (user) {
+          await updateCartItem({ product_id: product_id, quantity: newQuantity });
         }
-    }, []);
+        
+        // Update local state only after success
+        setCart((prev) => ({
+          ...prev,
+          [name]: {
+            name,
+            price,
+            quantity: newQuantity,
+            product_id,
+          },
+        }));
 
-    // Save cart on change
-    useEffect(() => {
-        localStorage.setItem('cart', JSON.stringify(cart));
-    }, [cart]);
-
-
-    const addItem = (name: string, price: number) => {
-      setTotalPrice((total) => total + price);
-
-      setCart((prev) => ({
-      ...prev,
-      [name]: {
-          name,
-          price: (prev[name]?.price ?? 0) + price,
-          quantity: (prev[name]?.quantity ?? 0) + 1,
-      },
-      }));
+        setTotalPrice((total) => total + price);
+      } catch (error) {
+        console.error('Failed to update cart item:', error);
+      }
     };
 
-    const removeItem = (name: string, price: number) => {
-      setTotalPrice((total) => total - price);
-      setCart((prev) => {
-      const updatedCart = { ...prev };
+    const removeItem = async (name: string, price: number, product_id: number) => {
+      const currentQuantity = cart[name]?.quantity ?? 0;
+      const newQuantity = currentQuantity - 1;
 
-        if (updatedCart[name]) {
-          updatedCart[name] = {
-            ...updatedCart[name],
-            price: updatedCart[name].price - price,
-            quantity: updatedCart[name].quantity - 1,
-          };
+      if (newQuantity < 0) return; // guard against negative quantities
 
-          // Optional: remove item completely if quantity <= 0
-          if (updatedCart[name].quantity <= 0) {
-            delete updatedCart[name];
-          }
+      try {
+        if (user) {
+          await updateCartItem({ product_id: product_id, quantity: newQuantity });
         }
 
-        return updatedCart;
-      });
+        setCart((prev) => {
+          const updatedCart = { ...prev };
+          if (newQuantity === 0) {
+            delete updatedCart[name];
+          } else {
+            updatedCart[name] = {
+              name,
+              price,
+              quantity: newQuantity,
+              product_id,
+            };
+          }
+          return updatedCart;
+        });
+
+        setTotalPrice((total) => total - price);
+      } catch (error) {
+        console.error('Failed to update cart item:', error);
+      }
     };
 
 
@@ -84,13 +151,24 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       return totalPrice;
     }
 
-    const clearCart = () => {
+    const getTotalQty = () => {
+      let totalQty = 0;
+      Object.values(cart).forEach((item) => {
+        totalQty += item.quantity;
+      });
+      return totalQty;
+    }
+
+    const clearCart = (db: boolean) => {
+      if (db) {
+        clearItemsInCart();
+      }
       setTotalPrice(0);
       setCart({});
     }
 
   return (
-    <CartContext.Provider value={{ cart, addItem, removeItem, getItemQuantity, getTotalQuantity, getTotalPrice, clearCart }}>
+    <CartContext.Provider value={{ cart, addItem, removeItem, getItemQuantity, getTotalQuantity, getTotalPrice, getTotalQty, clearCart }}>
       {children}
     </CartContext.Provider>
   );
