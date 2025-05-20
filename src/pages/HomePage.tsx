@@ -10,10 +10,6 @@ const HomePage = () => {
         <div className='min-h-screen flex flex-col'>
             <NavBar />
             <Hero />
-            {/* Featured section */}
-            <section className='justify-items-center py-12'>
-                <ProductGrid items={Products.featured} columns={3} />
-            </section>
         </div>
 
         {/* Other Products section */}

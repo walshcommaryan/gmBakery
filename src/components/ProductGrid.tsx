@@ -1,6 +1,7 @@
 import React from 'react';
 import ProductCard from './ProductCard';
 import { ProductCardProps } from './ProductCard';
+import Counter from './Counter';
 
 type ProductGridProps = {
   items: ProductCardProps[];
@@ -24,17 +25,26 @@ const ProductGrid = ({ items, columns}: ProductGridProps) => {
           ${getColsClass('xl', columns)}
         `}
       >
-        {items.map((item) => (
-          <ProductCard
-            key={item.name}
-            name={item.name}
-            product_id={item.product_id}
-            price={item.price}
-            itemImage={item.itemImage}
-            plateImage={item.plateImage}
-            sizeClass={item.sizeClass}
-          />
-        ))}
+        {items.map((item) => {
+          return (
+            <div className='relative'>
+              <div className="absolute -top-2 right-36 sm:top-0 sm:-right-4 md:top-0 md:right-4 lg:top-0 lg:right-6 xl:top-4 xl:right-12 z-30">
+                <Counter name={item.name} price={item.price} product_id={item.product_id} />
+              </div>
+              <div className='z-20'>
+                <ProductCard
+                name={item.name}
+                product_id={item.product_id}
+                price={item.price}
+                itemImage={item.itemImage}
+                plateImage={item.plateImage}
+                sizeClass={item.sizeClass}
+              />
+              </div>
+            </div>
+          );
+        })}
+
       </div>
     </div>
   );

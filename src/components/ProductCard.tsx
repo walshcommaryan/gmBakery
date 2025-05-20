@@ -1,7 +1,7 @@
 import React from 'react';
 import BakeryItem from './BakeryItem';
 import { motion } from 'framer-motion';
-import Counter from './Counter';
+
 
 export type ProductCardProps = {
   name: string;
@@ -16,16 +16,12 @@ const ProductCard = ({ name, price, product_id, itemImage, plateImage, sizeClass
 
   return (
       <div className="relative">
-        {/* Counter outside of motion and on top */}
-        <div className="flex justify-end -translate-x-4">
-          <Counter name={name} price={price} product_id={product_id} />
-        </div>
         <motion.div
           className='flex flex-col items-center transition'
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           whileHover={{
-            scale: 1.05,
+            scale: 1.03,
             transition: { duration: 0.1 },
           }}
 

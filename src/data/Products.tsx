@@ -1,70 +1,41 @@
 // Example bakery items data
-const featuredBase = [
+const productBase = [
   {
     product_id: 1,
-    name: 'Apple Tart',
-    price: 6.99,
-    itemImage: '/assets/images/apple_tart.png',
-    plateImage: '/assets/images/display_circle.png',
-  },
-  {
-    product_id: 1,
-    name: 'Tart',
+    name: 'Lemon Tart',
     price: 5.99,
-    itemImage: '/assets/images/tart.png',
+    itemImage: '/assets/images/gm_1.png',
     plateImage: '/assets/images/display_circle.png',
   },
   {
     product_id: 2,
-    name: 'Madeleines',
-    price: 3.99,
-    itemImage: '/assets/images/madeleines.png',
+    name: 'Macaron',
+    price: 2.99,
+    itemImage: '/assets/images/gm_2.png',
     plateImage: '/assets/images/display_circle.png',
   },
-];
-
-const productBase = [
   {
     product_id: 3,
-    name: 'Lemon Tart',
-    price: 5.99,
-    itemImage: '/assets/images/lemon_tart.png',
+    name: 'Apple Tart',
+    price: 6.99,
+    itemImage: '/assets/images/gm_3.png',
     plateImage: '/assets/images/display_circle.png',
   },
   {
     product_id: 4,
-    name: 'Macaron',
-    price: 2.99,
-    itemImage: '/assets/images/macaron.png',
+    name: 'Tart',
+    price: 5.99,
+    itemImage: '/assets/images/gm_4.png',
     plateImage: '/assets/images/display_circle.png',
   },
   {
     product_id: 5,
-    name: 'Apple Tart',
-    price: 6.99,
-    itemImage: '/assets/images/apple_tart.png',
-    plateImage: '/assets/images/display_circle.png',
-  },
-  {
-    product_id: 1,
-    name: 'Tart',
-    price: 5.99,
-    itemImage: '/assets/images/tart.png',
-    plateImage: '/assets/images/display_circle.png',
-  },
-  {
-    product_id: 2,
     name: 'Madeleines',
     price: 3.99,
-    itemImage: '/assets/images/madeleines.png',
+    itemImage: '/assets/images/gm_5.png',
     plateImage: '/assets/images/display_circle.png',
   },
 ];
-
-const featured = featuredBase.map(item => ({
-  ...item,
-  sizeClass: 'w-40 h-40 sm:w-48 sm:h-48 md:w-80 md:h-80 lg:w-96 lg:h-96, xl:w-96 xl:h-96',
-}));
 
 const productItems = productBase.map(item => ({
   ...item,
@@ -72,7 +43,6 @@ const productItems = productBase.map(item => ({
 }));
 
 const products = {
-  featured,
   productItems
 };
 
