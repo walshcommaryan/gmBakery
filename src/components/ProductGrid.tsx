@@ -28,7 +28,7 @@ const ProductGrid = ({ items, columns}: ProductGridProps) => {
         {items.map((item) => {
           return (
             <div className='relative'>
-              <div className="absolute -top-2 right-36 sm:top-0 sm:-right-4 md:top-0 md:right-4 lg:top-0 lg:right-6 xl:top-4 xl:right-12 z-30">
+              <div className="absolute -top-2 right-36 sm:top-0 sm:-right-6 md:top-0 -md:right-0 lg:top-0 lg:right-2 xl:top-0 xl:right-12 z-30">
                 <Counter name={item.name} price={item.price} product_id={item.product_id} />
               </div>
               <div className='z-20'>

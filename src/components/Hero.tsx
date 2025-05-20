@@ -1,13 +1,43 @@
-import React from 'react'
+import React from 'react';
 
 const Hero = () => {
-    return (
-        <div className='inline-block justify-items-start p-12 -mt-8'>
-            <h1 className='hero-text'>Exquisite experience</h1>
-            <h1 className='hero-text mr-8 inline-block'>packed in a </h1>
-            <h1 className='hero-text-sm inline-block'>petite bite</h1>
-        </div>
-    )
-}
+  return (
+    <div className="relative flex flex-col items-center justify-center px-4 pb-24 text-center overflow-hidden">
+      {/* Top Image on Mobile */}
+      <img
+        src="/assets/images/hero_icons/9.png"
+        alt="Pastry Left"
+        className="w-3/4 max-w-xs sm:hidden mb-6 object-contain"
+      />
+
+      {/* Hero Text */}
+      <div className="sm:my-48 lg:my-28 xl:my-20 z-10">
+        <h1 className="hero-text">Exquisite</h1>
+        <h1 className="hero-text">experience</h1>
+        <h1 className="hero-text">packed in a</h1>
+        <h1 className="hero-sub-text my-4">petite bite</h1>
+      </div>
+
+      {/* Bottom Image on Mobile */}
+      <img
+        src="/assets/images/hero_icons/10.png"
+        alt="Pastry Right"
+        className="w-2/3 max-w-xs sm:hidden mt-6 object-contain"
+      />
+
+      {/* Side Images on Larger Screens */}
+      <img
+        src="/assets/images/hero_icons/9.png"
+        alt="Pastry Left"
+        className="hidden sm:block absolute sm:top-[40%] sm:right-[70%] md:top-[40%] md:right-[65%] w-[180px] md:w-[300px] lg:w-[450px] xl:w-[550px] transform -translate-y-1/2 object-contain"
+      />
+      <img
+        src="/assets/images/hero_icons/10.png"
+        alt="Pastry Right"
+        className="hidden sm:block absolute sm:top-[40%] sm:left-[70%] md:top-[40%] md:left-[65%] w-[180px] md:w-[300px] lg:w-[450px] xl:w-[550px] transform -translate-y-1/2 object-contain"
+      />
+    </div>
+  );
+};
 
 export default Hero;

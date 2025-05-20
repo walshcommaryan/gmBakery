@@ -17,8 +17,22 @@ code {
 }
 
 @font-face {
+  font-family: 'Seasons';
+  src: url('/public/assets/fonts/Fontspring-DEMO-theseasons-reg.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'Epilogue';
   src: url('/public/assets/fonts/Epilogue-Light.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Benedict';
+  src: url('/public/assets/fonts/benedict-regular.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
@@ -29,7 +43,11 @@ code {
 }
 
 .hero-text {
-  @apply text-4xl sm:text-6xl lg:text-7xl xl:text-8xl text-white
+  @apply text-7xl sm:text-6xl lg:text-7xl xl:text-8xl font-seasons text-[#422b24]
+}
+
+.hero-sub-text {
+  @apply text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-benedict text-[#422b24]
 }
 
 .hero-text-sm {
@@ -49,3 +67,28 @@ code {
   @apply p-2 border rounded bg-white
 }
 
+.section-wrapper {
+  @apply px-4 py-8 mx-auto max-w-screen-md;
+}
+
+.section-title {
+  @apply mb-4 text-4xl tracking-tight font-extrabold text-center text-[#422b24];
+}
+
+.section-description {
+  @apply mb-8 lg:mb-16 font-light text-center sm:text-xl text-[#422b24];
+}
+
+.label-base {
+  @apply block mb-2 text-sm font-medium text-[#422b24];
+}
+
+.input-base {
+  @apply block w-full text-sm text-gray-900 bg-gray-50 border border-gray-300 rounded-lg shadow-sm p-2.5;
+}
+
+
+.button-submit {
+  @apply bg-white border border-gray-300 hover:bg-gray-100 focus:outline-none focus:ring-1 
+         focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-black;
+}

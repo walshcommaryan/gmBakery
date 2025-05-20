@@ -27,6 +27,8 @@ module.exports = {
     extend: {
       fontFamily: {
         bakery: ['"Epilogue"', 'sans-serif'],
+        seasons: ['"Seasons"', 'sans-serif'],
+        benedict: ['"Benedict"', 'sans-serif'],
       },
       colors: {
         'spanish-white': '#d4cda7',

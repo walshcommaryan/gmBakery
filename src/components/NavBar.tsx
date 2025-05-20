@@ -17,7 +17,7 @@ const NavBar = () => {
   };
 
   return (
-    <div className="flex justify-between p-12">
+    <div className="flex justify-between sm:p-4 lg:p-12">
       <div><p>GM Petit</p></div>
       <div className="flex flex-row gap-8 items-center">
         {user ? (
