@@ -13,7 +13,7 @@ export const getAllOrders = async (customerId?: number): Promise<Order[]> => {
 };
 
 export const createOrder = async (orderData: NewOrder): Promise<Order> => {
-  const response = await api.post<Order>('/order', orderData);
+  const response = await api.post<Order>('/orders', orderData);
   return response.data;
 };
 
