@@ -100,7 +100,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
           },
         }));
 
-        setTotalPrice((total) => total + price);
       } catch (error) {
         console.error('Failed to update cart item:', error);
       }
@@ -132,7 +131,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
           return updatedCart;
         });
 
-        setTotalPrice((total) => total - price);
       } catch (error) {
         console.error('Failed to update cart item:', error);
       }
@@ -148,8 +146,9 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     const getTotalPrice = () => {
-      return totalPrice;
-    }
+      return Object.values(cart).reduce((sum, item) => sum + item.price * item.quantity, 0);
+    };
+
 
     const getTotalQty = () => {
       let totalQty = 0;
@@ -163,7 +162,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       if (db) {
         clearItemsInCart();
       }
-      setTotalPrice(0);
       setCart({});
     }
 

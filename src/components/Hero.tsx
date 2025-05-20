@@ -11,7 +11,7 @@ const Hero = () => {
       />
 
       {/* Hero Text */}
-      <div className="sm:my-48 lg:my-28 xl:my-20 z-10">
+      <div className="sm:my-48 md:my-36 lg:my-28 xl:my-24 z-10">
         <h1 className="hero-text">Exquisite</h1>
         <h1 className="hero-text">experience</h1>
         <h1 className="hero-text">packed in a</h1>

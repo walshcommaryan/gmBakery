@@ -5,8 +5,9 @@ import Counter from './Counter';
 
 type ProductGridProps = {
   items: ProductCardProps[];
-  columns: number
+  columns: number;
 };
+
 
 const ProductGrid = ({ items, columns}: ProductGridProps) => {
 
@@ -37,7 +38,6 @@ const ProductGrid = ({ items, columns}: ProductGridProps) => {
                 product_id={item.product_id}
                 price={item.price}
                 itemImage={item.itemImage}
-                plateImage={item.plateImage}
                 sizeClass={item.sizeClass}
               />
               </div>

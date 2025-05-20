@@ -2,11 +2,10 @@ import React from 'react';
 
 type BakeryItemProps = {
   itemImage: string;
-  plateImage: string;
   sizeClass: string; // pass Tailwind class instead of number
 };
 
-const BakeryItem = ({ itemImage, plateImage, sizeClass }: BakeryItemProps) => {
+const BakeryItem = ({ itemImage, sizeClass }: BakeryItemProps) => {
   return (
     <div className={`relative ${sizeClass}`}>
       <img

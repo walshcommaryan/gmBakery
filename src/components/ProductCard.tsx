@@ -8,11 +8,10 @@ export type ProductCardProps = {
   price: number;
   product_id: number;
   itemImage: string;
-  plateImage: string;
   sizeClass: string;
 };
 
-const ProductCard = ({ name, price, product_id, itemImage, plateImage, sizeClass }: ProductCardProps) => {
+const ProductCard = ({ name, price, product_id, itemImage, sizeClass }: ProductCardProps) => {
 
   return (
       <div className="relative">
@@ -31,7 +30,7 @@ const ProductCard = ({ name, price, product_id, itemImage, plateImage, sizeClass
         <div className='relative'>
         
           {/* Bakery item with sizeClass */}
-          <BakeryItem itemImage={itemImage} plateImage={plateImage} sizeClass={sizeClass} />
+          <BakeryItem itemImage={itemImage} sizeClass={sizeClass} />
 
           {/* Dynamically positioned text */}
           <div

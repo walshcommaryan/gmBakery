@@ -20,7 +20,6 @@ const CheckOutGrid: React.FC<CheckoutGridProps> = ({ items }) => {
                     product_id={item.product_id}
                     price={item.price}
                     itemImage={item.itemImage}
-                    plateImage={item.plateImage}
                     sizeClass={item.sizeClass}
                 />
             ))}

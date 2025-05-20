@@ -17,9 +17,15 @@ const NavBar = () => {
   };
 
   return (
-    <div className="flex justify-between sm:p-4 lg:p-12">
-      <div><p>GM Petit</p></div>
-      <div className="flex flex-row gap-8 items-center">
+    <div className="flex justify-between p-4">
+      <div>
+        <img
+          src={'/assets/images/logo.png'}
+          alt='Pastry'
+          className='w-12 sm:w-16 md:w-24 object-contain'
+        />
+      </div>
+      <div className="flex gap-8 items-center mx-2 sm:mx-10">
         {user ? (
           <>
             <span>Welcome, {user.first_name}</span>
