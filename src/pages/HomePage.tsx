@@ -8,7 +8,7 @@ import { useProducts } from '../context/ProductContext';
 const HomePage = () => {
     const { products, loading } = useProducts();
 
-    if (loading) return <div>Loading...</div>; // Products still loading
+    if (loading) return <div></div>; // Products still loading
 
     return (
     <div className='bg-spanish-white text-gray-600 font-bakery'>

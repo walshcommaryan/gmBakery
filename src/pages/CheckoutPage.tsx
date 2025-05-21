@@ -13,7 +13,7 @@ const CheckOutPage = () => {
     const { products, loading } = useProducts();
     const totalPrice = Number(getTotalPrice().toFixed(2))
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <div className='bg-white'></div>;
 
     return (
         <div className='min-h-screen bg-gray-300 text-gray-600 font-bakery py-10'>

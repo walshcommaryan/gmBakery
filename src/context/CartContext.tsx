@@ -26,7 +26,6 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [cart, setCart] = useState<Record<string, CartItem>>({});
-  const [totalPrice, setTotalPrice] = useState<number>(0);
   const { user } = useAuth();
     
     // Restore cart on load
@@ -61,12 +60,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       });
 
       setCart(formattedCart);
-
-      const total = backendCart.reduce(
-        (sum: number, item: any) => sum + item.price * item.quantity,
-        0
-      );
-      setTotalPrice(total);
+      
     } catch (error) {
       console.error('Failed to sync cart after login', error);
     }
