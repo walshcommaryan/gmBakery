@@ -6,7 +6,6 @@ import LoginPage from './pages/LoginPage';
 
 const App = () => {
   return (
-    <div className="debug-screens">
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -14,7 +13,6 @@ const App = () => {
         <Route path="/checkout" element={<CheckoutPage />} />
       </Routes>
     </BrowserRouter>
-    </div>
   );
 };
 
