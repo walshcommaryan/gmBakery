@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const { login, error, loading } = useAuth();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     await login(email, password);
-    navigate('/');
+    navigate("/");
   };
 
   return (
@@ -21,7 +21,7 @@ const LoginPage = () => {
         <div className="flex justify-between p-4">
           <div></div>
           <div></div>
-          <button className="btn-checkout" onClick={() => navigate('/')}>
+          <button className="btn-checkout" onClick={() => navigate("/")}>
             Back
           </button>
         </div>
@@ -45,7 +45,7 @@ const LoginPage = () => {
           />
           {error && <p className="text-red-500 text-sm">{error}</p>}
           <button type="submit" disabled={loading} className="btn-checkout">
-            {loading ? 'Logging in...' : 'Login'}
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
       </div>

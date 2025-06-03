@@ -1,5 +1,16 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { login as apiLogin, register as apiRegister, getMe, logout as apiLogout } from '../api/auth';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
+import {
+  login as apiLogin,
+  register as apiRegister,
+  getMe,
+  logout as apiLogout,
+} from "../api/auth";
 
 interface User {
   customer_id: number;
@@ -14,7 +25,13 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   error: string | null;
-  register: (first_name: string, last_name: string, email: string, password: string, phone?: string) => Promise<boolean>;
+  register: (
+    first_name: string,
+    last_name: string,
+    email: string,
+    password: string,
+    phone?: string,
+  ) => Promise<boolean>;
   login: (email: string, password: string) => Promise<boolean>;
   logout: () => void;
 }
@@ -49,26 +66,26 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   });
 
   const register = async (
-    first_name: string, 
-    last_name: string, 
-    email: string, 
+    first_name: string,
+    last_name: string,
+    email: string,
     password: string,
-    phone?: string) => {
+    phone?: string,
+  ) => {
     setError(null);
     try {
       await apiRegister(first_name, last_name, email, password, phone);
       const res = await getMe();
       setUser(normalizeUser(res.data));
       setLoading(false);
-      return true; // success
+      return true; // successfully registered
     } catch (err) {
-      setError('Invalid email or password');
+      setError("Invalid email or password");
       setUser(null);
       setLoading(false);
-      return false; // failure
+      return false; // failed to register
     }
-  }
-
+  };
 
   const login = async (email: string, password: string): Promise<boolean> => {
     setLoading(true);
@@ -78,16 +95,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const res = await getMe();
       setUser(normalizeUser(res.data));
       setLoading(false);
-      return true; // success
+      return true; // successfully logged in
     } catch (err) {
-      setError('Invalid email or password');
+      setError("Invalid email or password");
       setUser(null);
       setLoading(false);
-      return false; // failure
+      return false; // failed to log in
     }
   };
-
-
 
   const logout = async () => {
     setUser(null);
@@ -95,17 +110,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, error, register, login, logout }}>
+    <AuthContext.Provider
+      value={{ user, loading, error, register, login, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );
 };
 
-// Custom hook to consume auth context
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };

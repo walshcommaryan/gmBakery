@@ -1,21 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect } from "react";
+import { useAuth } from "../context/AuthContext";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface AuthModalProps {
   isOpen: boolean;
   onClose: () => void;
-  loginRequired?: boolean;  // <-- new prop
+  loginRequired?: boolean;
 }
 
-const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, loginRequired }) => {
+const AuthModal: React.FC<AuthModalProps> = ({
+  isOpen,
+  onClose,
+  loginRequired,
+}) => {
   const { login, register, error } = useAuth();
   const [isLogin, setIsLogin] = useState(true);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
   const [localError, setLocalError] = useState<string | null>(null);
 
@@ -28,11 +32,11 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, loginRequired })
   if (!isOpen) return null;
 
   const clearInputs = () => {
-    setEmail('');
-    setPassword('');
-    setFirstName('');
-    setLastName('');
-    setPhone('');
+    setEmail("");
+    setPassword("");
+    setFirstName("");
+    setLastName("");
+    setPhone("");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -53,7 +57,9 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, loginRequired })
     if (success) {
       onClose();
     } else {
-      setLocalError(isLogin ? 'Invalid email or password' : 'Registration failed');
+      setLocalError(
+        isLogin ? "Invalid email or password" : "Registration failed",
+      );
     }
 
     clearInputs();
@@ -69,7 +75,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, loginRequired })
           </p>
         )}
         <h2 className="text-xl font-bold mb-4 text-center">
-          {isLogin ? 'Login' : 'Register'}
+          {isLogin ? "Login" : "Register"}
         </h2>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           {!isLogin && (
@@ -133,7 +139,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, loginRequired })
                 transition={{ duration: 0.2 }}
                 disabled={loading}
               >
-                {isLogin ? 'Login' : 'Register'}
+                {isLogin ? "Login" : "Register"}
               </motion.button>
             ) : (
               <motion.div
@@ -175,7 +181,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, loginRequired })
             onClick={() => setIsLogin(!isLogin)}
             disabled={loading}
           >
-            {isLogin ? 'New user? Register' : 'Already have an account? Login'}
+            {isLogin ? "New user? Register" : "Already have an account? Login"}
           </button>
           <div className="mt-2">
             <button

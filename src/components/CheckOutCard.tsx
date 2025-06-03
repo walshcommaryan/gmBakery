@@ -1,9 +1,14 @@
-import React from 'react'
-import { ProductCardProps } from './ProductCard';
-import Counter from './Counter';
-import { useCart } from '../context/CartContext'
+import React from "react";
+import { ProductCardProps } from "./ProductCard";
+import Counter from "./Counter";
+import { useCart } from "../context/CartContext";
 
-const CheckOutCard = ({ name, price, product_id, itemImage }: ProductCardProps) => {
+const CheckOutCard = ({
+  name,
+  price,
+  product_id,
+  itemImage,
+}: ProductCardProps) => {
   const { getItemQuantity } = useCart();
 
   return (
@@ -32,7 +37,7 @@ const CheckOutCard = ({ name, price, product_id, itemImage }: ProductCardProps) 
 
         {/* Price */}
         <div className="text-right font-bold text-sm sm:text-base w-full sm:w-auto sm:ml-auto">
-          ${ (getItemQuantity(name) * Number(price)).toFixed(2) }
+          ${(getItemQuantity(name) * Number(price)).toFixed(2)}
         </div>
       </div>
     </div>

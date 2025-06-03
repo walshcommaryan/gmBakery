@@ -1,4 +1,4 @@
-import api from './index';
+import api from "./index";
 
 export type ContactFormPayload = {
   email: string;
@@ -7,7 +7,6 @@ export type ContactFormPayload = {
   message: string;
 };
 
-
 export const sendEmail = async (payload: ContactFormPayload) => {
-  return api.post('/notification/email', payload);
+  return api.post("/notification/email", payload);
 };
