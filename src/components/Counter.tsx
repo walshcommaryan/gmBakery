@@ -50,19 +50,19 @@ const Counter: React.FC<CounterProps> = ({ name, price, product_id }) => {
           <button
             onClick={() => handleRemove(name)}
             ref={minusScope}
-            className=" bg-gray-200 text-black text-xl rounded-l-full w-6 h-6 flex items-center justify-center"
+            className=" border bg-white text-black text-xl rounded-l-full w-6 h-6 flex items-center justify-center"
           >
             {"-"}
           </button>
 
-          <p className="top-7 -right-0  bg-red-500 text-white text-xs w-6 h-6 flex items-center justify-center">
+          <p className="top-7 -right-0 my-auto border bg-white text-black text-xs w-6 h-6 flex items-center justify-center">
             {quantity}
           </p>
 
           <button
             onClick={() => handleAdd(name)}
             ref={plusScope}
-            className="top-7 -right-6 bg-gray-200 text-black text-xl rounded-r-full w-6 h-6 flex items-center justify-center"
+            className="top-7 -right-6 border bg-white text-black text-xl rounded-r-full w-6 h-6 flex items-center justify-center"
           >
             {"+"}
           </button>
@@ -71,7 +71,7 @@ const Counter: React.FC<CounterProps> = ({ name, price, product_id }) => {
         <div>
           <button
             onClick={() => addItem(name, price, product_id)}
-            className="top-7 right-0 bg-gray-200 text-black text-xl rounded-full w-6 h-6 flex items-center justify-center"
+            className="top-7 right-0 border bg-white text-black text-xl rounded-full w-6 h-6 flex items-center justify-center"
           >
             {"+"}
           </button>

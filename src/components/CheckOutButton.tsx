@@ -1,22 +1,24 @@
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
 
 interface CheckOutButtonProps {
   openLoginModal: (required?: boolean) => void;
+  openCheckoutModal: () => void;
 }
 
-const CheckOutButton: React.FC<CheckOutButtonProps> = ({ openLoginModal }) => {
+const CheckOutButton: React.FC<CheckOutButtonProps> = ({
+  openLoginModal,
+  openCheckoutModal,
+}) => {
   const { getTotalQuantity } = useCart();
   const { user } = useAuth();
   const total = getTotalQuantity();
-  const navigate = useNavigate();
 
   const handleCheckoutClick = () => {
     if (!user) {
       openLoginModal(true);
     } else {
-      navigate("/checkout");
+      openCheckoutModal();
     }
   };
 

@@ -4,7 +4,8 @@ import { createCheckout } from "../api/billing";
 import { CheckoutOrder } from "../api/types/CheckoutOrder";
 
 export const SquareCheckout = () => {
-  const { cart, getTotalPrice } = useCart();
+  const { cart, getTotalPrice, getTotalQty } = useCart();
+  const totalQty = getTotalQty();
 
   const lineItems: CheckoutOrder[] = Object.values(cart).map((item) => ({
     product_id: item.product_id,
@@ -19,7 +20,7 @@ export const SquareCheckout = () => {
     try {
       const { url } = await createCheckout(lineItems);
       if (url) {
-        window.location.href = url; // Redirect to Square hosted checkout
+        window.location.href = url;
       }
     } catch (err) {
       console.error("Failed to create checkout session", err);
@@ -27,16 +28,21 @@ export const SquareCheckout = () => {
   };
 
   return (
-    <div className="w-full lg:w-1/3 h-auto rounded-lg mx-auto text-white bg-gray-800 p-6">
-      <form onSubmit={handleCheckout} className="grid grid-cols-1 gap-4">
-        <h1 className="text-2xl font-bold text-center">
-          $ {getTotalPrice().toFixed(2)}
+    <div className="w-full rounded-lg mx-auto text-white bg-pastryYellow p-6">
+      <form onSubmit={handleCheckout} className="grid grid-cols-1 gap-2">
+        <h1 className="text-black text-xl font-bold text-center">
+          Total: $ {getTotalPrice().toFixed(2)}
         </h1>
+        <p className="text-black text-sm sm:text-base flex-1 mx-auto">
+          {totalQty === 0
+            ? " Cart is empty"
+            : `(${totalQty} item${totalQty === 1 ? "" : "s"} in your cart)`}
+        </p>
         <button
           type="submit"
-          className="w-full rounded-md bg-cyan-500 p-3 shadow-lg shadow-cyan-500/50 text-white"
+          className="w-full rounded-md text-black font-bold bg-pastryWhite p-3 shadow-md shadow-gray-400"
         >
-          Checkout with Square
+          Proceed to Checkout
         </button>
       </form>
     </div>

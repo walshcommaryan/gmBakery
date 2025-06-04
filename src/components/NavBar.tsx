@@ -1,14 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
+import { useCart } from "../context/CartContext";
 import CheckOutButton from "./CheckOutButton";
 import AuthModal from "./AuthModal";
-import { useCart } from "../context/CartContext";
+import CheckoutModal from "./CheckoutModal";
+import CheckoutPage from "../pages/CheckoutPage";
 
 const NavBar = () => {
   const { user, logout } = useAuth();
+  const { clearCart } = useCart();
+
   const [showModal, setShowModal] = useState(false);
   const [loginRequired, setLoginRequired] = useState(false);
-  const { clearCart } = useCart();
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+
+  // Prevent background scroll when checkout modal is open
+  useEffect(() => {
+    if (isCheckoutOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [isCheckoutOpen]);
 
   const openLoginModal = (required = false) => {
     setLoginRequired(required);
@@ -17,6 +30,7 @@ const NavBar = () => {
 
   return (
     <div className="flex justify-between p-4">
+      {/* Logo */}
       <div>
         <img
           src={"/assets/images/logo.png"}
@@ -24,6 +38,8 @@ const NavBar = () => {
           className="w-12 sm:w-16 md:w-24 object-contain"
         />
       </div>
+
+      {/* Right section */}
       <div className="flex gap-8 items-center mx-2 sm:mx-10">
         {user ? (
           <>
@@ -46,8 +62,14 @@ const NavBar = () => {
             Login
           </button>
         )}
-        <CheckOutButton openLoginModal={openLoginModal} />
+
+        <CheckOutButton
+          openLoginModal={openLoginModal}
+          openCheckoutModal={() => setIsCheckoutOpen(true)}
+        />
       </div>
+
+      {/* Auth Modal */}
       <AuthModal
         isOpen={showModal}
         onClose={() => {
@@ -56,6 +78,13 @@ const NavBar = () => {
         }}
         loginRequired={loginRequired}
       />
+
+      {/* Checkout Modal */}
+      {isCheckoutOpen && (
+        <CheckoutModal onClose={() => setIsCheckoutOpen(false)}>
+          <CheckoutPage onClose={() => setIsCheckoutOpen(false)} />
+        </CheckoutModal>
+      )}
     </div>
   );
 };

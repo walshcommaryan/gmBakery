@@ -32,6 +32,9 @@ module.exports = {
       },
       colors: {
         'spanish-white': '#d4cda7',
+        'pastryWhite': "#fbfaf6",
+        'pastryYellow': "#ffeab6",
+        'chocolate': "#422b24"
       },
     },
   },

@@ -29,7 +29,7 @@ const ContactSection = () => {
   };
 
   return (
-    <section className="bg-spanish-white text-[#422b24] overflow-hidden">
+    <section className="bg-pastryWhite text-chocolate overflow-hidden">
       <div className="section-wrapper">
         <h2 className="section-title">Contact Us</h2>
         <p className="section-description">
