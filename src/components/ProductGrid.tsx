@@ -38,6 +38,7 @@ const ProductGrid = ({ items, columns }: ProductGridProps) => {
                   name={item.name}
                   product_id={item.product_id}
                   price={item.price}
+                  pack_size={item.pack_size}
                   itemImage={item.itemImage}
                   sizeClass={item.sizeClass}
                 />

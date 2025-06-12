@@ -7,9 +7,12 @@ const CheckOutCard = ({
   name,
   price,
   product_id,
+  pack_size,
   itemImage,
 }: ProductCardProps) => {
   const { getItemQuantity } = useCart();
+  const quantity = getItemQuantity(name);
+  const totalUnits = quantity * (pack_size || 1); // fallback to 1 if not passed
 
   return (
     <div className="flex flex-col sm:flex-row items-center gap-4 bg-white shadow-md ring-1 ring-slate-200 rounded-xl p-4">
@@ -22,12 +25,18 @@ const CheckOutCard = ({
         />
       </div>
 
-      {/* Content container flex-grow to take available space */}
+      {/* Content */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:flex-grow w-full gap-2">
-        {/* Name */}
-        <h2 className="text-md sm:text-lg font-semibold truncate flex-grow">
-          {name}
-        </h2>
+        <div className="flex-grow">
+          <h2 className="text-md sm:text-lg font-semibold truncate">{name}</h2>
+
+          {/* 🆕 Pack display line */}
+          {pack_size > 1 && quantity > 0 && (
+            <p className="text-sm text-gray-500">
+              {quantity} pack(s) ({totalUnits} total)
+            </p>
+          )}
+        </div>
 
         {/* Qty / Counter */}
         <div className="flex items-center gap-2 sm:justify-center lg:w-[150px] flex-shrink-0">
@@ -37,7 +46,7 @@ const CheckOutCard = ({
 
         {/* Price */}
         <div className="text-right font-bold text-sm sm:text-base w-full sm:w-auto sm:ml-auto">
-          ${(getItemQuantity(name) * Number(price)).toFixed(2)}
+          ${(quantity * Number(price)).toFixed(2)}
         </div>
       </div>
     </div>

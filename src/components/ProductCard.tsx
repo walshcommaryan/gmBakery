@@ -6,6 +6,7 @@ export type ProductCardProps = {
   name: string;
   price: number;
   product_id: number;
+  pack_size: number;
   itemImage: string;
   sizeClass: string;
 };
@@ -14,6 +15,7 @@ const ProductCard = ({
   name,
   price,
   product_id,
+  pack_size,
   itemImage,
   sizeClass,
 }: ProductCardProps) => {
@@ -29,12 +31,9 @@ const ProductCard = ({
         }}
         viewport={{ once: true, amount: 0.2 }}
       >
-        {/* Relative container for bakery item and text */}
         <div className="relative">
-          {/* Bakery item with sizeClass */}
           <BakeryItem itemImage={itemImage} sizeClass={sizeClass} />
 
-          {/* Dynamically positioned text */}
           <div
             className="absolute inset-0 flex flex-col items-center justify-between px-2"
             style={{
@@ -47,10 +46,12 @@ const ProductCard = ({
               textAlign: "center",
             }}
           >
-            {/* Name */}
             <h2 className="text-lg md:text-xl font-semibold">{name}</h2>
-            {/* Price */}
             <p className="text-gray-500">$ {price}</p>
+
+            {pack_size > 1 && (
+              <p className="text-xs text-gray-400 mt-1">Pack of {pack_size}</p>
+            )}
           </div>
         </div>
       </motion.div>
