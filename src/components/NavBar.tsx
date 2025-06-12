@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
 import CheckOutButton from "./CheckOutButton";
@@ -14,13 +15,8 @@ const NavBar = () => {
   const [loginRequired, setLoginRequired] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
 
-  // Prevent background scroll when checkout modal is open
   useEffect(() => {
-    if (isCheckoutOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
+    document.body.style.overflow = isCheckoutOpen ? "hidden" : "unset";
   }, [isCheckoutOpen]);
 
   const openLoginModal = (required = false) => {
@@ -28,8 +24,13 @@ const NavBar = () => {
     setShowModal(true);
   };
 
+  const handleLogout = () => {
+    logout();
+    clearCart(false);
+  };
+
   return (
-    <div className="flex justify-between p-4">
+    <div className="flex justify-between p-4 items-center">
       {/* Logo */}
       <div>
         <img
@@ -40,36 +41,53 @@ const NavBar = () => {
       </div>
 
       {/* Right section */}
-      <div className="flex gap-8 items-center mx-2 sm:mx-10">
-        {user ? (
-          <>
-            <span>Welcome, {user.first_name}</span>
-            <button
-              className="btn-checkout"
-              onClick={() => {
-                logout();
-                clearCart(false);
-              }}
-            >
-              Logout
-            </button>
-          </>
-        ) : (
-          <button
-            className="btn-checkout"
-            onClick={() => openLoginModal(false)}
+      <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 mx-2 sm:mx-10">
+        {/* Navigation */}
+        <div className="btn-nav flex gap-4">
+          <Link
+            to="/about"
+            className="text-sm font-medium text-gray-700 hover:text-gray-900 transition"
           >
-            Login
-          </button>
-        )}
+            About
+          </Link>
+        </div>
 
-        <CheckOutButton
-          openLoginModal={openLoginModal}
-          openCheckoutModal={() => setIsCheckoutOpen(true)}
-        />
+        {/* Auth Section */}
+        <div className="flex items-center gap-4 relative">
+          {user ? (
+            <div className="relative group">
+              <span className="text-sm btn-nav font-medium text-gray-700 cursor-pointer hover:text-gray-900">
+                Welcome, {user.first_name}
+              </span>
+              <div className="absolute left-0 mt-1 w-28 rounded-md bg-white shadow-lg ring-1 ring-gray-200 opacity-0 group-hover:opacity-100 transition duration-150 z-10">
+                <button
+                  onClick={handleLogout}
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  Logout
+                </button>
+              </div>
+            </div>
+          ) : (
+            <button
+              className="text-sm btn-nav font-medium text-gray-700 hover:text-gray-900 transition"
+              onClick={() => openLoginModal(false)}
+            >
+              Login
+            </button>
+          )}
+
+          {/* Checkout Button */}
+          <div className="ml-4">
+            <CheckOutButton
+              openLoginModal={openLoginModal}
+              openCheckoutModal={() => setIsCheckoutOpen(true)}
+            />
+          </div>
+        </div>
       </div>
 
-      {/* Auth Modal */}
+      {/* Modals */}
       <AuthModal
         isOpen={showModal}
         onClose={() => {
@@ -79,7 +97,6 @@ const NavBar = () => {
         loginRequired={loginRequired}
       />
 
-      {/* Checkout Modal */}
       {isCheckoutOpen && (
         <CheckoutModal onClose={() => setIsCheckoutOpen(false)}>
           <CheckoutPage onClose={() => setIsCheckoutOpen(false)} />
