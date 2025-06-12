@@ -19,13 +19,13 @@ const CheckOutPage: React.FC<CheckOutPageProps> = ({ onClose }) => {
       <div className="mx-auto">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 p-4 text-center sm:text-left">
           <button
-            className="btn-checkout w-full sm:w-auto"
+            className="btn-nav w-full sm:w-auto"
             onClick={() => clearCart(true)}
           >
             Clear Cart
           </button>
 
-          <button className="btn-checkout w-full sm:w-auto" onClick={onClose}>
+          <button className="btn-nav w-full sm:w-auto" onClick={onClose}>
             Back
           </button>
         </div>

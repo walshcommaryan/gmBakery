@@ -21,7 +21,7 @@ const LoginPage = () => {
         <div className="flex justify-between p-4">
           <div></div>
           <div></div>
-          <button className="btn-checkout" onClick={() => navigate("/")}>
+          <button className="btn-nav" onClick={() => navigate("/")}>
             Back
           </button>
         </div>
@@ -44,7 +44,7 @@ const LoginPage = () => {
             className="p-2 border rounded"
           />
           {error && <p className="text-red-500 text-sm">{error}</p>}
-          <button type="submit" disabled={loading} className="btn-checkout">
+          <button type="submit" disabled={loading} className="btn-nav">
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>

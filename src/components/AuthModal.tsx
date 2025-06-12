@@ -132,7 +132,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
               <motion.button
                 key="login"
                 type="submit"
-                className="btn-checkout"
+                className="btn-nav"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
@@ -186,7 +186,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
           <div className="mt-2">
             <button
               onClick={onClose}
-              className="text-sm text-gray-500 underline"
+              className="btn-nav text-sm text-gray-500"
               disabled={loading}
             >
               Close

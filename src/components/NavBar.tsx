@@ -43,12 +43,19 @@ const NavBar = () => {
       {/* Right section */}
       <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 mx-2 sm:mx-10">
         {/* Navigation */}
-        <div className="btn-nav flex gap-4">
+        <Link
+          to="/about"
+          className="btn-nav flex items-center justify-center text-sm font-medium text-gray-700 hover:text-gray-900 transition"
+        >
+          About
+        </Link>
+
+        <div className="flex gap-4">
           <Link
-            to="/about"
-            className="text-sm font-medium text-gray-700 hover:text-gray-900 transition"
+            to="/location"
+            className="btn-nav text-sm font-medium text-gray-700 hover:text-gray-900 transition"
           >
-            About
+            Locations
           </Link>
         </div>
 
