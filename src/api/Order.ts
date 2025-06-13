@@ -16,3 +16,14 @@ export const createOrder = async (orderData: NewOrder): Promise<Order> => {
   const response = await api.post<Order>("/orders", orderData);
   return response.data;
 };
+
+export const checkPaymentStatus = async (): Promise<boolean> => {
+  try {
+    const res = await api.get("/orders/check-payment", {
+      withCredentials: true,
+    });
+    return res.data.ok === true;
+  } catch (err) {
+    return false;
+  }
+};

@@ -3,16 +3,23 @@ import { ProductCardProps } from "./ProductCard";
 import Counter from "./Counter";
 import { useCart } from "../context/CartContext";
 
-const CheckOutCard = ({
+interface Props extends ProductCardProps {
+  readOnly?: boolean;
+}
+
+const CheckOutCard: React.FC<Props> = ({
   name,
   price,
   product_id,
   pack_size,
   itemImage,
-}: ProductCardProps) => {
+  readOnly = false,
+}) => {
   const { getItemQuantity } = useCart();
   const quantity = getItemQuantity(name);
   const totalUnits = quantity * (pack_size || 1); // fallback to 1 if not passed
+
+  console.log("readOnly?", readOnly);
 
   return (
     <div className="flex flex-col sm:flex-row items-center gap-4 bg-white shadow-md ring-1 ring-slate-200 rounded-xl p-4">
@@ -30,7 +37,6 @@ const CheckOutCard = ({
         <div className="flex-grow">
           <h2 className="text-md sm:text-lg font-semibold truncate">{name}</h2>
 
-          {/* 🆕 Pack display line */}
           {pack_size > 1 && quantity > 0 && (
             <p className="text-sm text-gray-500">
               {quantity} pack(s) ({totalUnits} total)
@@ -38,10 +44,14 @@ const CheckOutCard = ({
           )}
         </div>
 
-        {/* Qty / Counter */}
+        {/* Conditionally show editable counter or read-only quantity */}
         <div className="flex items-center gap-2 sm:justify-center lg:w-[150px] flex-shrink-0">
           <p className="text-sm">Qty:</p>
-          <Counter name={name} price={price} product_id={product_id} />
+          {readOnly ? (
+            <p className="text-sm font-medium">{quantity}</p>
+          ) : (
+            <Counter name={name} price={price} product_id={product_id} />
+          )}
         </div>
 
         {/* Price */}
