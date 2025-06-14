@@ -12,4 +12,6 @@ export interface Order {
   order_date: string;
   status: OrderStatus;
   total_amount: number;
+  location: string;
+  pickup_date: string;
 }

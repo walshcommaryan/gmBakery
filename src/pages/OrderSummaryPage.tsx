@@ -110,6 +110,19 @@ const OrderSummaryPage: React.FC = () => {
                     : "--"}
                 </span>
               </div>
+              <div className="pt-6 text-left text-gray-600 text-sm space-y-1">
+                {latestOrder?.location && (
+                  <p>
+                    <strong>📍 Pickup Location:</strong> {latestOrder.location}
+                  </p>
+                )}
+                {latestOrder?.pickup_date && (
+                  <p>
+                    <strong>📅 Pickup Date:</strong>{" "}
+                    {new Date(latestOrder.pickup_date).toLocaleDateString()}
+                  </p>
+                )}
+              </div>
             </div>
           </div>
 
