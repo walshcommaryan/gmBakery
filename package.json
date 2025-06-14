@@ -4,6 +4,8 @@
   "private": true,
   "proxy": "http://localhost:2000",
   "dependencies": {
+    "@headlessui/react": "^2.2.4",
+    "@heroicons/react": "^2.2.0",
     "@stripe/react-stripe-js": "^3.7.0",
     "@stripe/stripe-js": "^7.3.0",
     "@testing-library/dom": "^10.4.0",

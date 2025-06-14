@@ -45,6 +45,13 @@ code {
           active:scale-95 focus:outline-none;
 }
 
+.btn-drop {
+  @apply inline-flex items-center justify-center h-10 px-4 py-2 rounded-md bg-white
+          text-sm font-medium text-gray-700 border border-gray-400
+          hover:text-gray-900 hover:border-gray-600 transition
+          active:scale-95 focus:outline-none;
+}
+
 .btn {
   @apply inline-flex items-center justify-center px-8 py-2
           text-base border border-gray-400
