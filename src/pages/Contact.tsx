@@ -1,14 +1,15 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { sendEmail } from "../api/Notification";
 
 const ContactSection = () => {
   const [form, setForm] = useState({
+    name: "",
     email: "",
     phone: "",
     subject: "",
     message: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -18,13 +19,16 @@ const ContactSection = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       await sendEmail(form);
       alert("Message sent!");
-      setForm({ email: "", phone: "", subject: "", message: "" });
+      setForm({ name: "", email: "", phone: "", subject: "", message: "" });
     } catch (err) {
       console.error(err);
       alert("Something went wrong. Try again later.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -36,7 +40,22 @@ const ContactSection = () => {
           Need catering services? We’d love to be part of your event. Let us
           know here.
         </p>
-        <form className="space-y-8" onSubmit={handleSubmit}>
+        <form className="space-y-4" onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="name" className="label-base">
+              Your name
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              className="input-base"
+              placeholder="John Doe"
+              onChange={handleChange}
+              value={form.name}
+              required
+            />
+          </div>
           <div>
             <label htmlFor="email" className="label-base">
               Your email
@@ -95,8 +114,18 @@ const ContactSection = () => {
               value={form.message}
             />
           </div>
-          <button type="submit" className="button-submit">
-            Submit
+
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="relative button-submit min-h-[48px] px-10 flex items-center justify-center disabled:opacity-70"
+          >
+            <span className={isLoading ? "invisible" : ""}>Submit</span>
+            {isLoading && (
+              <span className="absolute">
+                <span className="loading loading-spinner loading-md text-black" />
+              </span>
+            )}
           </button>
         </form>
       </div>
