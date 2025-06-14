@@ -31,43 +31,28 @@ export const SquareCheckout = () => {
   };
 
   return (
-    <div className="w-full rounded-lg mx-auto text-white bg-pastryYellow p-6">
-      <form onSubmit={handleCheckout} className="grid grid-cols-1 gap-2">
+    <div className="w-full max-w-xl mx-auto rounded-lg text-black bg-pastryYellow p-6">
+      <form onSubmit={handleCheckout} className="grid grid-cols-1 gap-6">
         <h1 className="text-black text-xl font-bold text-center">
           Total: ${getTotalPrice().toFixed(2)}
         </h1>
-        <p className="text-black text-sm sm:text-base flex-1 mx-auto">
+        <p className="text-black text-sm sm:text-base text-center mx-auto">
           {totalQty === 0
             ? "Cart is empty"
             : `(${totalQty} item${totalQty === 1 ? "" : "s"} in your cart)`}
         </p>
         <button
           type="submit"
-          className="btn-checkout flex items-center justify-center"
+          className="btn relative flex items-center justify-center px-10 text-lg min-h-[60px] disabled:opacity-70 mx-auto"
           disabled={isLoading}
         >
-          {isLoading ? (
-            <svg
-              className="animate-spin h-5 w-5 text-gray-600"
-              viewBox="0 0 24 24"
-              fill="none"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              ></circle>
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-              ></path>
-            </svg>
-          ) : (
-            "Proceed to Checkout"
+          <span className={isLoading ? "invisible" : ""}>
+            Proceed to Checkout
+          </span>
+          {isLoading && (
+            <span className="absolute">
+              <span className="loading loading-spinner loading-md text-black"></span>
+            </span>
           )}
         </button>
       </form>
