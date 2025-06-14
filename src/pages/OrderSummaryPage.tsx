@@ -3,40 +3,74 @@ import { useCart } from "../context/CartContext";
 import CheckOutGrid from "../components/CheckOutGrid";
 import { useProducts } from "../context/ProductContext";
 import { useNavigate } from "react-router-dom";
-import { checkPaymentStatus } from "../api/Order";
+import {
+  checkPaymentStatus,
+  getOrderHistory,
+  resetPaymentConfirmation,
+  getOrderItems,
+} from "../api/Order";
+import { Order } from "../api/types/Order";
+import { ProductCardProps } from "../components/ProductCard";
 
 const OrderSummaryPage: React.FC = () => {
-  const { getTotalPrice } = useCart();
-  const { products, loading } = useProducts();
+  const { clearCart } = useCart();
+  const { loading } = useProducts();
   const navigate = useNavigate();
   const [checking, setChecking] = useState(true);
-  const [alreadyChecked, setAlreadyChecked] = useState(false);
+  const [latestOrder, setLatestOrder] = useState<Order | null>(null);
+  const [orderItems, setOrderItems] = useState<ProductCardProps[]>([]);
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    if (alreadyChecked) return;
-
     const verifyPayment = async () => {
-      setAlreadyChecked(true);
       const confirmed = await checkPaymentStatus();
 
       if (!confirmed) {
         navigate("/");
-      } else {
-        setChecking(false);
+        return;
       }
+
+      const history = await getOrderHistory();
+      const order = history.length > 0 ? history[0] : null;
+      setLatestOrder(order);
+
+      if (order?.order_id) {
+        const items = await getOrderItems(order.order_id);
+        setOrderItems(items);
+      }
+
+      clearCart(true);
+      setChecking(false);
     };
 
     verifyPayment();
-  }, [navigate, alreadyChecked]);
+  }, []);
+  /* eslint-disable react-hooks/exhaustive-deps */
 
+  // ✅ Reset backend flag if user refreshes or closes tab
   useEffect(() => {
-    // Optional: prevent back navigation to Square
+    const handleUnload = () => {
+      resetPaymentConfirmation();
+    };
+
+    window.addEventListener("beforeunload", handleUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleUnload);
+    };
+  }, []);
+
+  // ✅ Reset backend flag if user clicks "Back to Home"
+  const handleBackToHome = async () => {
+    await resetPaymentConfirmation();
+    navigate("/");
+  };
+
+  // Optional: prevent back nav to Square
+  useEffect(() => {
     window.history.replaceState(null, "", window.location.href);
   }, []);
 
   if (checking || loading) return <div className="bg-[#fbfaf6] h-screen" />;
-
-  const total = getTotalPrice();
 
   return (
     <section className="py-12 bg-[#fbfaf6] font-bakery min-h-screen">
@@ -61,26 +95,33 @@ const OrderSummaryPage: React.FC = () => {
               <div className="py-6 border-b border-gray-200 space-y-4">
                 <div className="flex justify-between text-lg text-gray-600">
                   <span>Product Cost</span>
-                  <span>${total.toFixed(2)}</span>
+                  <span>
+                    {latestOrder?.total_amount
+                      ? `$${Number(latestOrder.total_amount).toFixed(2)}`
+                      : "--"}
+                  </span>
                 </div>
               </div>
               <div className="flex justify-between pt-6 text-xl font-bold text-chocolate">
                 <span>Total</span>
-                <span>${total.toFixed(2)}</span>
+                <span>
+                  {latestOrder?.total_amount
+                    ? `$${Number(latestOrder.total_amount).toFixed(2)}`
+                    : "--"}
+                </span>
               </div>
             </div>
           </div>
 
           {/* Order Items */}
           <div className="w-full text-black flex-grow space-y-4">
-            <CheckOutGrid items={products} readOnly={true} />
+            <CheckOutGrid items={orderItems} readOnly={true} />
           </div>
         </div>
 
-        {/* Back to Home Button */}
         <div className="text-center mt-12">
           <button
-            onClick={() => navigate("/")}
+            onClick={handleBackToHome}
             className="inline-block px-6 py-3 btn-nav transition-all font-semibold"
           >
             Back to Home

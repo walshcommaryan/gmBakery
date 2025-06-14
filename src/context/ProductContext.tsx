@@ -7,6 +7,7 @@ type Product = {
   name: string;
   price: number;
   pack_size: number;
+  quantity: number;
   itemImage: string;
   sizeClass: string;
 };

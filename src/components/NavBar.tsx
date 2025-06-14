@@ -67,7 +67,13 @@ const NavBar = () => {
             <span className="btn-nav cursor-pointer">
               Welcome, {user.first_name}
             </span>
-            <div className="absolute left-0 mt-1 w-28 rounded-md bg-white shadow-lg ring-1 ring-gray-200 opacity-0 group-hover:opacity-100 transition duration-150 z-10">
+            <div className="absolute left-0 mt-1 w-40 rounded-md bg-white shadow-lg ring-1 ring-gray-200 opacity-0 group-hover:opacity-100 transition duration-150 z-10">
+              <Link
+                to="/order-history"
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              >
+                Order History
+              </Link>
               <button
                 onClick={handleLogout}
                 className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -119,6 +125,13 @@ const NavBar = () => {
             {user ? (
               <>
                 <span className="btn-nav">Welcome, {user.first_name}</span>
+                <Link
+                  to="/order-history"
+                  className="btn-nav"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Order History
+                </Link>
                 <button
                   className="btn-nav"
                   onClick={() => {

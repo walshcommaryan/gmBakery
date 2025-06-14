@@ -27,3 +27,40 @@ export const checkPaymentStatus = async (): Promise<boolean> => {
     return false;
   }
 };
+
+export const getLatestPaidOrder = async (): Promise<Order | null> => {
+  try {
+    const res = await api.get<Order>("/orders/latest-paid", {
+      withCredentials: true,
+    });
+    return res.data;
+  } catch (err) {
+    return null;
+  }
+};
+
+export const resetPaymentConfirmation = async (): Promise<void> => {
+  try {
+    await api.post(
+      "/orders/reset-confirmation",
+      {},
+      {
+        withCredentials: true,
+      },
+    );
+  } catch (err) {
+    console.error("Failed to reset payment confirmation:", err);
+  }
+};
+
+export const getOrderHistory = async (): Promise<Order[]> => {
+  const res = await api.get("/orders/history", { withCredentials: true });
+  return res.data;
+};
+
+export const getOrderItems = async (orderId: number) => {
+  const res = await api.get(`/orders/${orderId}/items`, {
+    withCredentials: true,
+  });
+  return res.data;
+};

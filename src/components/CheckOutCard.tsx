@@ -5,6 +5,7 @@ import { useCart } from "../context/CartContext";
 
 interface Props extends ProductCardProps {
   readOnly?: boolean;
+  itemImage: string;
 }
 
 const CheckOutCard: React.FC<Props> = ({
@@ -13,20 +14,19 @@ const CheckOutCard: React.FC<Props> = ({
   product_id,
   pack_size,
   itemImage,
+  quantity,
   readOnly = false,
 }) => {
   const { getItemQuantity } = useCart();
-  const quantity = getItemQuantity(name);
-  const totalUnits = quantity * (pack_size || 1); // fallback to 1 if not passed
-
-  console.log("readOnly?", readOnly);
+  const finalQuantity = readOnly ? quantity : getItemQuantity(name);
+  const totalUnits = finalQuantity * (pack_size || 1);
 
   return (
     <div className="flex flex-col sm:flex-row items-center gap-4 bg-white shadow-md ring-1 ring-slate-200 rounded-xl p-4">
       {/* Image */}
       <div className="w-24 h-24 sm:w-20 sm:h-20 border-2 border-gray-400 rounded-lg overflow-hidden flex-shrink-0">
         <img
-          src={`${itemImage}`}
+          src={itemImage || "/assets/images/placeholder.png"}
           alt={name}
           className="object-cover w-full h-full"
         />
@@ -37,18 +37,18 @@ const CheckOutCard: React.FC<Props> = ({
         <div className="flex-grow">
           <h2 className="text-md sm:text-lg font-semibold truncate">{name}</h2>
 
-          {pack_size > 1 && quantity > 0 && (
+          {pack_size > 1 && finalQuantity > 0 && (
             <p className="text-sm text-gray-500">
-              {quantity} pack(s) ({totalUnits} total)
+              {finalQuantity} pack(s) ({totalUnits} total)
             </p>
           )}
         </div>
 
-        {/* Conditionally show editable counter or read-only quantity */}
+        {/* Quantity Section */}
         <div className="flex items-center gap-2 sm:justify-center lg:w-[150px] flex-shrink-0">
           <p className="text-sm">Qty:</p>
           {readOnly ? (
-            <p className="text-sm font-medium">{quantity}</p>
+            <p className="text-sm font-medium">{finalQuantity}</p>
           ) : (
             <Counter name={name} price={price} product_id={product_id} />
           )}
@@ -56,7 +56,7 @@ const CheckOutCard: React.FC<Props> = ({
 
         {/* Price */}
         <div className="text-right font-bold text-sm sm:text-base w-full sm:w-auto sm:ml-auto">
-          ${(quantity * Number(price)).toFixed(2)}
+          ${(finalQuantity * Number(price)).toFixed(2)}
         </div>
       </div>
     </div>

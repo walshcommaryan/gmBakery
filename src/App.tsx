@@ -5,6 +5,7 @@ import LoginPage from "./pages/LoginPage";
 import AboutPage from "./pages/AboutPage";
 import LocationPage from "./pages/LocationPage";
 import OrderSummaryPage from "./pages/OrderSummaryPage";
+import OrderHistoryPage from "./pages/OrderHistoryPage";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/location" element={<LocationPage />} />
         <Route path="/summary" element={<OrderSummaryPage />} />
+        <Route path="/order-history" element={<OrderHistoryPage />} />
       </Routes>
     </BrowserRouter>
   );
