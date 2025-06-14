@@ -35,7 +35,9 @@ const CheckOutCard: React.FC<Props> = ({
       {/* Content */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:flex-grow w-full gap-2">
         <div className="flex-grow">
-          <h2 className="text-md sm:text-lg font-semibold truncate">{name}</h2>
+          <h2 className="text-md sm:text-lg font-semibold truncate text-black">
+            {name}
+          </h2>
 
           {pack_size > 1 && finalQuantity > 0 && (
             <p className="text-sm text-gray-500">
