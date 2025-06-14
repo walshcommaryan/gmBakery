@@ -44,8 +44,8 @@ const OrderHistoryPage: React.FC = () => {
 
   if (loading)
     return (
-      <div className="bg-[#fbfaf6] min-h-screen p-4 font-bakery">
-        Loading order history...
+      <div className="bg-[#fbfaf6] min-h-screen flex items-center justify-center font-bakery">
+        <span className="loading loading-spinner loading-lg text-chocolate"></span>
       </div>
     );
 
