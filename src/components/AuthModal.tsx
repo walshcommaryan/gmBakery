@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
-import { motion, AnimatePresence } from "framer-motion";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -127,54 +126,23 @@ const AuthModal: React.FC<AuthModalProps> = ({
             disabled={loading}
           />
           {localError && <p className="text-red-500 text-sm">{localError}</p>}
-          <AnimatePresence>
-            {!loading ? (
-              <motion.button
-                key="login"
-                type="submit"
-                className="btn-nav"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.2 }}
-                disabled={loading}
-              >
-                {isLogin ? "Login" : "Register"}
-              </motion.button>
-            ) : (
-              <motion.div
-                key="loading"
-                className="flex justify-center items-center gap-2 text-sm text-gray-600"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <svg
-                  className="animate-spin h-5 w-5 text-cyan-500"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  />
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8v8H4z"
-                  />
-                </svg>
-                Logging in...
-              </motion.div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="btn-nav relative flex items-center justify-center px-10 text-lg min-h-[48px] disabled:opacity-70"
+          >
+            <span className={loading ? "invisible" : ""}>
+              {isLogin ? "Login" : "Register"}
+            </span>
+            {loading && (
+              <span className="absolute">
+                <span className="loading loading-spinner loading-md text-black"></span>
+              </span>
             )}
-          </AnimatePresence>
+          </button>
         </form>
+
         <div className="mt-4 text-center">
           <button
             className="text-sm text-blue-500 underline"
