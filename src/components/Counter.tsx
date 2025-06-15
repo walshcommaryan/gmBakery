@@ -45,10 +45,11 @@ const Counter: React.FC<CounterProps> = ({ name, price, product_id }) => {
             ) : (
               <MinusIcon className="w-3 h-3" />
             )}
-
           </button>
 
-          <span className="text-sm text-center w-6 font-semibold">{quantity}</span>
+          <span className="text-sm text-center w-6 font-semibold">
+            {quantity}
+          </span>
 
           <button
             onClick={handleAdd}

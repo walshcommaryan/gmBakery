@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { sendEmail } from "../api/Notification";
+import { AnimatePresence, motion } from "framer-motion";
 
 const ContactSection = () => {
   const [form, setForm] = useState({
@@ -10,6 +11,17 @@ const ContactSection = () => {
     message: "",
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [alert, setAlert] = useState<null | {
+    type: "success" | "error";
+    message: string;
+  }>(null);
+
+  useEffect(() => {
+    if (alert) {
+      const timeout = setTimeout(() => setAlert(null), 5000);
+      return () => clearTimeout(timeout);
+    }
+  }, [alert]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -20,13 +32,18 @@ const ContactSection = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setAlert(null); // Clear existing alert
+
     try {
       await sendEmail(form);
-      alert("Message sent!");
       setForm({ name: "", email: "", phone: "", subject: "", message: "" });
+      setAlert({ type: "success", message: "Your message has been sent!" });
     } catch (err) {
       console.error(err);
-      alert("Something went wrong. Try again later.");
+      setAlert({
+        type: "error",
+        message: "Something went wrong. Try again later.",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -40,6 +57,45 @@ const ContactSection = () => {
           Need catering services? We’d love to be part of your event. Let us
           know here.
         </p>
+        <AnimatePresence>
+          {alert && (
+            <motion.div
+              key="alert"
+              initial={{ y: -50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -30, opacity: 0 }}
+              transition={{ duration: 0.4 }}
+              className="fixed top-4 inset-x-0 mx-auto z-50 w-fit max-w-[90%]"
+            >
+              <div
+                role="alert"
+                className={`alert ${
+                  alert.type === "success" ? "alert-success" : "alert-error"
+                } flex items-center gap-2 shadow-lg`}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 shrink-0 stroke-current"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d={
+                      alert.type === "success"
+                        ? "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                        : "M6 18L18 6M6 6l12 12"
+                    }
+                  />
+                </svg>
+                <span>{alert.message}</span>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="name" className="label-base">
