@@ -21,9 +21,13 @@ const HomePage = () => {
       </div>
 
       <div className="min-h-screen py-12 bg-pastryYellow">
-        <h2 className="pb-20 text-5xl font-bold text-center font-seasons text-[#422b24]">
-          Products
-        </h2>
+        <div className="flex flex-col items-center pb-20">
+          <h2 className="text-5xl font-bold text-center font-seasons text-[#422b24]">
+            Order
+          </h2>
+          <p className="text-lg italic text-[#422b24]">(for pick up only)</p>
+        </div>
+
         <ProductGrid items={products} columns={3} />
       </div>
 

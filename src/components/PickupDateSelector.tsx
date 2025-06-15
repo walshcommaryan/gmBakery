@@ -1,5 +1,5 @@
-// PickupDateSelector.tsx
 import * as React from "react";
+import { useState } from "react";
 import { format } from "date-fns";
 import {
   Popover,
@@ -7,72 +7,108 @@ import {
   PopoverContent,
 } from "@radix-ui/react-popover";
 import { DayPicker } from "react-day-picker";
+import { motion, AnimatePresence } from "framer-motion";
 import "react-day-picker/dist/style.css";
 
 interface Props {
   value: Date | undefined;
   onChange: (date: Date) => void;
+  error?: boolean;
 }
 
-export const PickupDateSelector: React.FC<Props> = ({ value, onChange }) => {
+export const PickupDateSelector: React.FC<Props> = ({
+  value,
+  onChange,
+  error,
+}) => {
+  const [open, setOpen] = useState(false);
+
+  const handleSelect = (date: Date | undefined) => {
+    if (date) {
+      onChange(date);
+      setOpen(false);
+    }
+  };
+
   return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <button
-          className="w-full bg-white border border-gray-300 rounded-md px-4 py-2 text-sm text-black text-center hover:bg-gray-50"
-          type="button"
-        >
-          {value ? `📅 ${format(value, "PPP")}` : "📅 Pick a Saturday"}
-        </button>
-      </PopoverTrigger>
-      <PopoverContent
-        className="z-20 mt-2 bg-white rounded-md shadow p-2"
-        sideOffset={5}
-      >
-        <DayPicker
-          mode="single"
-          selected={value}
-          onSelect={(date) => date && onChange(date)}
-          modifiersClassNames={{
-            selected: "bg-black text-white",
-            today: "border border-black",
-          }}
-          disabled={(date) => {
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
+    <div className="w-full">
+      <label className="text-sm font-medium text-black mb-1 inline-block">
+        Pickup Date <span className="text-red-500">*</span>
+      </label>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <button
+            className={`w-full bg-white border rounded-md px-4 py-2 text-sm text-black text-center hover:bg-gray-50 ${
+              error ? "border-red-500" : "border-gray-300"
+            }`}
+            type="button"
+          >
+            {value ? `📅 ${format(value, "PPP")}` : "📅 Pick a Saturday"}
+          </button>
+        </PopoverTrigger>
 
-            const candidate = new Date(date);
-            candidate.setHours(0, 0, 0, 0);
+        <AnimatePresence>
+          {open && (
+            <PopoverContent
+              forceMount
+              className="z-20 mt-2 rounded-md shadow p-2"
+              sideOffset={5}
+              asChild
+            >
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+                className="bg-white"
+              >
+                <DayPicker
+                  mode="single"
+                  selected={value}
+                  onSelect={handleSelect}
+                  modifiersClassNames={{
+                    selected: "bg-black text-white",
+                    today: "border border-black",
+                  }}
+                  disabled={(date) => {
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0);
 
-            const isSaturday = candidate.getDay() === 6;
-            if (!isSaturday) return true;
+                    const candidate = new Date(date);
+                    candidate.setHours(0, 0, 0, 0);
 
-            const isToday = candidate.getTime() === today.getTime();
-            if (isToday) return true;
+                    const isSaturday = candidate.getDay() === 6;
+                    if (!isSaturday) return true;
 
-            // Disallow any date before today
-            if (candidate < today) return true;
+                    const isToday = candidate.getTime() === today.getTime();
+                    if (isToday) return true;
 
-            // Calculate this week's Saturday
-            const thisSaturday = new Date(today);
-            thisSaturday.setDate(
-              today.getDate() + ((6 - today.getDay() + 7) % 7),
-            );
-            thisSaturday.setHours(0, 0, 0, 0);
+                    if (candidate < today) return true;
 
-            // Wednesday 11:59 PM cutoff
-            const cutoff = new Date(today);
-            cutoff.setDate(today.getDate() + ((3 - today.getDay() + 7) % 7)); // Next Wednesday
-            cutoff.setHours(23, 59, 59, 999);
+                    const thisSaturday = new Date(today);
+                    thisSaturday.setDate(
+                      today.getDate() + ((6 - today.getDay() + 7) % 7),
+                    );
+                    thisSaturday.setHours(0, 0, 0, 0);
 
-            const isThisSaturday =
-              candidate.getTime() === thisSaturday.getTime();
-            const pastCutoff = new Date() > cutoff;
+                    const cutoff = new Date(today);
+                    cutoff.setDate(
+                      today.getDate() + ((3 - today.getDay() + 7) % 7),
+                    );
+                    cutoff.setHours(23, 59, 59, 999);
 
-            return isThisSaturday && pastCutoff;
-          }}
-        />
-      </PopoverContent>
-    </Popover>
+                    const isThisSaturday =
+                      candidate.getTime() === thisSaturday.getTime();
+                    const pastCutoff = new Date() > cutoff;
+
+                    return isThisSaturday && pastCutoff;
+                  }}
+                />
+              </motion.div>
+            </PopoverContent>
+          )}
+        </AnimatePresence>
+      </Popover>
+    </div>
   );
 };

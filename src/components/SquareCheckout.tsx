@@ -12,6 +12,13 @@ export const SquareCheckout = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [pickupLocation, setPickupLocation] = useState("");
   const [pickupDate, setPickupDate] = useState<Date | undefined>();
+  const [errors, setErrors] = useState<{ location?: boolean; date?: boolean }>(
+    {},
+  );
+  const [showErrors, setShowErrors] = useState(false);
+
+  const dateRef = React.useRef<HTMLDivElement>(null);
+  const locationRef = React.useRef<HTMLDivElement>(null);
 
   const lineItems: CheckoutOrder[] = Object.values(cart).map((item) => ({
     product_id: item.product_id,
@@ -22,11 +29,15 @@ export const SquareCheckout = () => {
 
   const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!pickupLocation || !pickupDate) return;
-    setIsLoading(true);
 
+    if (!pickupLocation || !pickupDate) {
+      setShowErrors(true); // show red borders
+      return;
+    }
+
+    setIsLoading(true);
     try {
-      const formattedDate = format(pickupDate, "yyyy-MM-dd");
+      const formattedDate = format(pickupDate!, "yyyy-MM-dd");
       const { url } = await createCheckout(
         lineItems,
         pickupLocation,
@@ -37,6 +48,16 @@ export const SquareCheckout = () => {
       console.error("Failed to create checkout session", err);
       setIsLoading(false);
     }
+  };
+
+  const handlePickupDateChange = (date: Date) => {
+    setPickupDate(date);
+    if (date && pickupLocation) setShowErrors(false);
+  };
+
+  const handleLocationChange = (location: string) => {
+    setPickupLocation(location);
+    if (pickupDate && location) setShowErrors(false);
   };
 
   return (
@@ -53,19 +74,23 @@ export const SquareCheckout = () => {
         </p>
 
         {/* Date Picker */}
-        <PickupDateSelector value={pickupDate} onChange={setPickupDate} />
+        <PickupDateSelector
+          value={pickupDate}
+          onChange={handlePickupDateChange}
+          error={showErrors && !pickupDate}
+        />
 
         {/* Location Dropdown */}
         <PickupLocationSelector
           value={pickupLocation}
-          onChange={setPickupLocation}
+          onChange={handleLocationChange}
+          error={showErrors && !pickupLocation}
         />
 
         {/* Checkout Button */}
         <button
           type="submit"
-          className="btn relative flex items-center justify-center px-10 text-lg min-h-[60px] disabled:opacity-70 mx-auto"
-          disabled={isLoading || !pickupLocation || !pickupDate}
+          className="btn relative flex items-center justify-center px-10 text-lg min-h-[60px] mx-auto"
         >
           <span className={isLoading ? "invisible" : ""}>
             Proceed to Checkout
