@@ -77,7 +77,7 @@ const OrderSummaryPage: React.FC = () => {
       <div className="w-full max-w-7xl px-4 md:px-6 mx-auto">
         <div className="text-center mb-10">
           <h1 className="text-4xl font-bold text-chocolate">
-            🎉 Your Order is Confirmed!
+            Your Order is Confirmed!
           </h1>
           <p className="mt-2 text-lg text-gray-600">
             Thank you for your purchase. A confirmation email will be sent
