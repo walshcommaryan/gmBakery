@@ -24,7 +24,7 @@ const HomePage = () => {
         <h2 className="pb-20 text-5xl font-bold text-center font-seasons text-[#422b24]">
           Products
         </h2>
-        <ProductGrid items={products} columns={4} />
+        <ProductGrid items={products} columns={3} />
       </div>
 
       <section className="min-h-screen">
