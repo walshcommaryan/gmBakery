@@ -8,10 +8,11 @@ import CheckoutModal from "./CheckoutModal";
 import CheckoutPage from "../pages/CheckoutPage";
 import { MenuButton } from "./MenuButton";
 import { motion, AnimatePresence } from "framer-motion";
+import { ShoppingCartIcon } from "@heroicons/react/24/solid";
 
 const NavBar = () => {
   const { user, logout } = useAuth();
-  const { clearCart } = useCart();
+  const { clearCart, getTotalQty } = useCart();
 
   const [showModal, setShowModal] = useState(false);
   const [loginRequired, setLoginRequired] = useState(false);
@@ -87,10 +88,12 @@ const NavBar = () => {
             Login
           </button>
         )}
-        <CheckOutButton
-          openLoginModal={openLoginModal}
-          openCheckoutModal={() => setIsCheckoutOpen(true)}
-        />
+        {user && getTotalQty() > 0 && (
+          <CheckOutButton
+            openLoginModal={openLoginModal}
+            openCheckoutModal={() => setIsCheckoutOpen(true)}
+          />
+        )}
       </div>
 
       {/* Mobile Hamburger */}
@@ -124,7 +127,6 @@ const NavBar = () => {
             </Link>
             {user ? (
               <>
-                <span className="btn-nav">Welcome, {user.first_name}</span>
                 <Link
                   to="/order-history"
                   className="btn-nav"
@@ -153,16 +155,49 @@ const NavBar = () => {
                 Login
               </button>
             )}
-            <CheckOutButton
-              openLoginModal={openLoginModal}
-              openCheckoutModal={() => {
-                setIsCheckoutOpen(true);
-                setIsOpen(false);
-              }}
-            />
+            {user && getTotalQty() > 0 && (
+              <CheckOutButton
+                openLoginModal={openLoginModal}
+                openCheckoutModal={() => {
+                  setIsCheckoutOpen(true);
+                  setIsOpen(false);
+                }}
+              />
+            )}
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Floating Cart Icon */}
+      <AnimatePresence>
+  {getTotalQty() > 0 && (
+    <motion.button
+      key="cart-icon"
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.8 }}
+      transition={{ duration: 0.2 }}
+      onClick={() => {
+        if (user) {
+          setIsCheckoutOpen(true);
+        } else {
+          setLoginRequired(true);
+          setShowModal(true);
+        }
+      }}
+      className="fixed bottom-4 right-4 z-50 bg-[#f7e6d0] hover:bg-[#f4d6af] text-[#5a3a29] p-4 rounded-full shadow-lg transition-colors"
+      aria-label="Open cart"
+    >
+      <div className="relative">
+        <ShoppingCartIcon className="w-6 h-6" />
+        <span className="absolute -top-3 -right-4 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+          {getTotalQty()}
+        </span>
+      </div>
+    </motion.button>
+  )}
+</AnimatePresence>
+
 
       {/* Modals */}
       <AuthModal
