@@ -39,6 +39,15 @@ export const PickupLocationSelector: React.FC<Props> = ({
               >
                 <Select.ItemText>Wolf Ranch Farmers Market</Select.ItemText>
               </Select.Item>
+
+              <Select.Item
+                value="Dripping Springs Farmers Market"
+                className="px-3 py-2 text-sm text-black hover:bg-gray-100 rounded cursor-pointer"
+              >
+                <Select.ItemText>
+                  Dripping Springs Farmers Market
+                </Select.ItemText>
+              </Select.Item>
             </Select.Viewport>
           </Select.Content>
         </Select.Portal>

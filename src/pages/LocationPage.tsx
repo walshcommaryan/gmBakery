@@ -4,11 +4,19 @@ import { useNavigate } from "react-router-dom";
 const LOCATIONS = [
   {
     name: "Wolf Ranch Farmers Market",
-    address: "1015 W University Ave, Georgetown, Texas",
+    address: "1015 W University Ave, Georgetown, TX 78628",
     hours: "Saturdays • 8:30 AM – 1:00 PM",
     image: "/assets/images/locations/wolf-ranch-farmers-market.png",
     mapsUrl:
       "https://www.google.com/maps/place/Farmers+Market+At+Wolf+Ranch+Shopping+Center+In+Georgetown+TX/@30.6302605,-97.6990091,17z/data=!3m1!4b1!4m6!3m5!1s0x8644d6790c45146f:0x20e6bb4883ad423a!8m2!3d30.6302605!4d-97.6964342!16s%2Fg%2F11f24x15p0?entry=ttu&g_ep=EgoyMDI1MDYwOS4xIKXMDSoASAFQAw%3D%3D",
+  },
+  {
+    name: "Dripping Springs Farmers Market",
+    address: "1042 Event Center Dr, Dripping Springs, TX 78620",
+    hours: "Saturdays • 8:30 AM – 1:00 PM",
+    image: "/assets/images/locations/dripping-springs.png",
+    mapsUrl:
+      "https://www.google.com/maps/place/Dripping+Springs+Farmers+Market/@30.2171282,-98.1215868,14z/data=!4m7!3m6!1s0x865b41794aea94c3:0x7f1d6b8638fc9b8a!8m2!3d30.2171282!4d-98.0865679!15sCiJkcmlwcGluZyBzcHJpbmdzIHR4IGZhcm1lcnMgbWFya2V0WiQiImRyaXBwaW5nIHNwcmluZ3MgdHggZmFybWVycyBtYXJrZXSSAQ5mYXJtZXJzX21hcmtldKoBXxABKhIiDmZhcm1lcnMgbWFya2V0KAAyHxABIhtKnZN_D-PpPC4_rL6vqNtyHgS27qug_OWhiuMyJhACIiJkcmlwcGluZyBzcHJpbmdzIHR4IGZhcm1lcnMgbWFya2V04AEA!16s%2Fg%2F11b5pjj577?entry=tts&g_ep=EgoyMDI1MDYxMS4wIPu8ASoASAFQAw%3D%3D&skid=44fc6e3e-f235-4b92-b56c-8367e990398c",
   },
 ];
 

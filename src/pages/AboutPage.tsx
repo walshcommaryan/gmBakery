@@ -30,7 +30,7 @@ const About = () => {
                   <p className="text-gray-500 text-base font-normal leading-relaxed lg:text-start text-center">
                     Founded by a French baker with a passion for precision and
                     tradition, our bakery brings the soul of French patisserie
-                    to the heart of Texas. From humble beginnings in Riverside,
+                    to the heart of Texas. From humble beginnings in Redlands,
                     California, to now serving communities in Austin, it's been
                     a journey shaped by love for craftsmanship and people.
                   </p>
@@ -63,7 +63,7 @@ const About = () => {
                       2 Farmer's Markets
                     </h4>
                     <p className="text-gray-500 text-base font-normal leading-relaxed">
-                      Find us weekly at Wolf Ranch and Mueller.
+                      Find us weekly at Wolf Ranch and Dripping Springs.
                     </p>
                   </div>
                   <div className="w-full h-full p-3.5 rounded-xl border border-gray-200 hover:border-gray-400 transition-all duration-700 ease-in-out flex-col justify-start items-start gap-2.5 inline-flex">
