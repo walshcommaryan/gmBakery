@@ -13,7 +13,7 @@ const LOCATIONS = [
   {
     name: "Dripping Springs Farmers Market",
     address: "1042 Event Center Dr, Dripping Springs, TX 78620",
-    hours: "Saturdays • 8:30 AM – 1:00 PM",
+    hours: "Saturdays • 3:00 PM – 6:00 PM",
     image: "/assets/images/locations/dripping-springs.png",
     mapsUrl:
       "https://www.google.com/maps/place/Dripping+Springs+Farmers+Market/@30.2171282,-98.1215868,14z/data=!4m7!3m6!1s0x865b41794aea94c3:0x7f1d6b8638fc9b8a!8m2!3d30.2171282!4d-98.0865679!15sCiJkcmlwcGluZyBzcHJpbmdzIHR4IGZhcm1lcnMgbWFya2V0WiQiImRyaXBwaW5nIHNwcmluZ3MgdHggZmFybWVycyBtYXJrZXSSAQ5mYXJtZXJzX21hcmtldKoBXxABKhIiDmZhcm1lcnMgbWFya2V0KAAyHxABIhtKnZN_D-PpPC4_rL6vqNtyHgS27qug_OWhiuMyJhACIiJkcmlwcGluZyBzcHJpbmdzIHR4IGZhcm1lcnMgbWFya2V04AEA!16s%2Fg%2F11b5pjj577?entry=tts&g_ep=EgoyMDI1MDYxMS4wIPu8ASoASAFQAw%3D%3D&skid=44fc6e3e-f235-4b92-b56c-8367e990398c",
