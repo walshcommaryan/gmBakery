@@ -52,7 +52,7 @@ const About = () => {
                       From California to Austin
                     </h4>
                     <p className="text-gray-500 text-base font-normal leading-relaxed">
-                      A Riverside favorite, now a Texas treasure.
+                      A Redlands favorite, now a Texas treasure.
                     </p>
                   </div>
                 </div>
