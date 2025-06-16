@@ -19,7 +19,7 @@ const CheckOutGrid: React.FC<CheckoutGridProps> = ({ items, readOnly }) => {
   return (
     <div className="grid gap-4 px-2 sm:px-4">
       {visibleItems.map((item) => {
-        const itemImage =
+        const images =
           imageMap[item.name] || "/assets/images/placeholder.png";
 
         return (
@@ -27,7 +27,7 @@ const CheckOutGrid: React.FC<CheckoutGridProps> = ({ items, readOnly }) => {
             key={item.product_id}
             readOnly={readOnly}
             {...item}
-            itemImage={itemImage}
+            images={images}
           />
         );
       })}

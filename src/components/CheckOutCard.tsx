@@ -5,7 +5,7 @@ import { useCart } from "../context/CartContext";
 
 interface Props extends ProductCardProps {
   readOnly?: boolean;
-  itemImage: string;
+  images: string[];
 }
 
 const CheckOutCard: React.FC<Props> = ({
@@ -13,7 +13,7 @@ const CheckOutCard: React.FC<Props> = ({
   price,
   product_id,
   pack_size,
-  itemImage,
+  images,
   quantity,
   readOnly = false,
 }) => {
@@ -26,7 +26,7 @@ const CheckOutCard: React.FC<Props> = ({
       {/* Image */}
       <div className="w-24 h-24 sm:w-20 sm:h-20 border-2 border-gray-400 rounded-lg overflow-hidden flex-shrink-0">
         <img
-          src={itemImage || "/assets/images/placeholder.png"}
+          src={images[0] || "/assets/images/placeholder.png"}
           alt={name}
           className="object-cover w-full h-full"
         />

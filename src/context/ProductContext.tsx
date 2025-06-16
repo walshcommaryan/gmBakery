@@ -8,7 +8,8 @@ type Product = {
   price: number;
   pack_size: number;
   quantity: number;
-  itemImage: string;
+  description: string;
+  images: string[];
   sizeClass: string;
 };
 
@@ -36,7 +37,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
         const res = await getProducts();
         const enriched = res.data.map((product: any) => ({
           ...product,
-          itemImage: imageMap[product.name] || "/assets/images/default.png",
+          images: imageMap[product.name] || "/assets/images/default.png",
           sizeClass:
             "w-32 h-32 sm:w-40 sm:h-40 md:w-56 md:h-56 lg:w-72 lg:h-72 xl:w-72 xl:h-72",
         }));

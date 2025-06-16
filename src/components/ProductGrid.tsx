@@ -40,7 +40,8 @@ const ProductGrid = ({ items, columns }: ProductGridProps) => {
                   price={item.price}
                   pack_size={item.pack_size}
                   quantity={item.quantity}
-                  itemImage={item.itemImage}
+                  description={item.description}
+                  images={item.images}
                   sizeClass={item.sizeClass}
                 />
               </div>
