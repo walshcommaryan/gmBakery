@@ -50,7 +50,7 @@ const HomePage = () => {
           <p className="text-lg italic text-[#422b24]">(for pick up only)</p>
         </div>
 
-        <ProductGrid items={products} columns={3} />
+        <ProductGrid items={products} columns={4} />
       </div>
 
       <section className="min-h-screen">
