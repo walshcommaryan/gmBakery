@@ -15,3 +15,6 @@ export const register = (
 export const getMe = () => api.get("/auth/me");
 
 export const logout = () => api.post("/auth/logout");
+
+export const forgotPassword = (email: string) =>
+  api.post("/auth/forgot-password", { email });

@@ -5,18 +5,36 @@ import ProductGrid from "../components/ProductGrid";
 import { useProducts } from "../context/ProductContext";
 import CheckoutModal from "../components/CheckoutModal";
 import CheckOutPage from "./CheckoutPage";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 const HomePage = () => {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const { products, loading } = useProducts();
+  const [showModal, setShowModal] = useState(false);
+  const [loginRequired, setLoginRequired] = useState(false);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (params.get("login") === "true") {
+      setShowModal(true);
+      setLoginRequired(false);
+    }
+  }, [location.search]);
 
   if (loading) return <div></div>;
 
   return (
     <div className="bg-pastryWhite text-gray-600 font-bakery">
       <div className="min-h-screen flex flex-col">
-        <NavBar />
+        <NavBar
+          showModal={showModal}
+          setShowModal={setShowModal}
+          loginRequired={loginRequired}
+          setLoginRequired={setLoginRequired}
+        />
         <Hero />
       </div>
 
@@ -40,6 +58,8 @@ const HomePage = () => {
           <CheckOutPage onClose={() => setIsCheckoutOpen(false)} />
         </CheckoutModal>
       )}
+
+      {/* <AuthModal showModal={showModal} setShowModal={setShowModal} /> */}
     </div>
   );
 };

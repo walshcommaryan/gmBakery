@@ -47,7 +47,7 @@ const OrderSummaryPage: React.FC = () => {
   }, []);
   /* eslint-disable react-hooks/exhaustive-deps */
 
-  // ✅ Reset backend flag if user refreshes or closes tab
+  // Reset backend flag if user refreshes or closes tab
   useEffect(() => {
     const handleUnload = () => {
       resetPaymentConfirmation();
@@ -59,13 +59,13 @@ const OrderSummaryPage: React.FC = () => {
     };
   }, []);
 
-  // ✅ Reset backend flag if user clicks "Back to Home"
+  // Reset backend flag if user clicks "Back to Home"
   const handleBackToHome = async () => {
     await resetPaymentConfirmation();
     navigate("/");
   };
 
-  // Optional: prevent back nav to Square
+  // prevent back nav to Square
   useEffect(() => {
     window.history.replaceState(null, "", window.location.href);
   }, []);

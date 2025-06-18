@@ -10,12 +10,22 @@ import { MenuButton } from "./MenuButton";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingCartIcon } from "@heroicons/react/24/solid";
 
-const NavBar = () => {
+interface NavBarProps {
+  showModal: boolean;
+  setShowModal: (show: boolean) => void;
+  loginRequired: boolean;
+  setLoginRequired: (required: boolean) => void;
+}
+
+const NavBar: React.FC<NavBarProps> = ({
+  showModal,
+  setShowModal,
+  loginRequired,
+  setLoginRequired,
+}) => {
   const { user, logout } = useAuth();
   const { clearCart, getTotalQty } = useCart();
 
-  const [showModal, setShowModal] = useState(false);
-  const [loginRequired, setLoginRequired] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 

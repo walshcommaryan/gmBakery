@@ -6,6 +6,7 @@ import AboutPage from "./pages/AboutPage";
 import LocationPage from "./pages/LocationPage";
 import OrderSummaryPage from "./pages/OrderSummaryPage";
 import OrderHistoryPage from "./pages/OrderHistoryPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/location" element={<LocationPage />} />
         <Route path="/summary" element={<OrderSummaryPage />} />
         <Route path="/order-history" element={<OrderHistoryPage />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
       </Routes>
     </BrowserRouter>
   );
