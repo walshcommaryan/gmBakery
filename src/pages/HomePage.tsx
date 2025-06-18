@@ -28,6 +28,7 @@ const HomePage = () => {
 
   return (
     <div className="bg-pastryWhite text-gray-600 font-bakery">
+      {/* NavBar + Hero fill the viewport */}
       <div className="min-h-screen flex flex-col">
         <NavBar
           showModal={showModal}
@@ -35,9 +36,12 @@ const HomePage = () => {
           loginRequired={loginRequired}
           setLoginRequired={setLoginRequired}
         />
-        <Hero />
+        <div className="flex-1 flex">
+          <Hero />
+        </div>
       </div>
 
+      {/* Everything below Hero is outside the height calculation */}
       <div className="min-h-screen py-12 bg-pastryYellow">
         <div className="flex flex-col items-center pb-20">
           <h2 className="text-5xl font-bold text-center font-seasons text-[#422b24]">
@@ -58,8 +62,6 @@ const HomePage = () => {
           <CheckOutPage onClose={() => setIsCheckoutOpen(false)} />
         </CheckoutModal>
       )}
-
-      {/* <AuthModal showModal={showModal} setShowModal={setShowModal} /> */}
     </div>
   );
 };

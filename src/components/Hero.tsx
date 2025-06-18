@@ -2,7 +2,7 @@ import React from "react";
 
 const Hero = () => {
   return (
-    <div className="relative flex flex-col items-center justify-center px-4 pb-24 text-center overflow-hidden">
+    <section className="min-h-full flex flex-col items-center justify-center px-4 text-center overflow-hidden bg-pastryWhite w-full">
       {/* Top Image on Mobile */}
       <img
         src="/assets/images/hero_icons/9.png"
@@ -11,7 +11,7 @@ const Hero = () => {
       />
 
       {/* Hero Text */}
-      <div className="sm:my-48 md:my-36 lg:my-28 xl:my-24 z-10">
+      <div className="flex flex-col items-center justify-center flex-1 z-10">
         <h1 className="hero-text">Exquisite</h1>
         <h1 className="hero-text">experience</h1>
         <h1 className="hero-text">packed in a</h1>
@@ -29,14 +29,14 @@ const Hero = () => {
       <img
         src="/assets/images/hero_icons/9.png"
         alt="Pastry Left"
-        className="hidden sm:block absolute sm:top-[40%] sm:right-[70%] md:top-[40%] md:right-[65%] w-[180px] md:w-[300px] lg:w-[450px] xl:w-[550px] transform -translate-y-1/2 object-contain"
+        className="hidden sm:block absolute sm:top-1/2 sm:right-[70%] md:right-[65%] w-[180px] md:w-[300px] lg:w-[450px] xl:w-[550px] transform -translate-y-1/2 object-contain"
       />
       <img
         src="/assets/images/hero_icons/10.png"
         alt="Pastry Right"
-        className="hidden sm:block absolute sm:top-[40%] sm:left-[70%] md:top-[40%] md:left-[65%] w-[180px] md:w-[300px] lg:w-[450px] xl:w-[550px] transform -translate-y-1/2 object-contain"
+        className="hidden sm:block absolute sm:top-1/2 sm:left-[70%] md:left-[65%] w-[180px] md:w-[300px] lg:w-[450px] xl:w-[550px] transform -translate-y-1/2 object-contain"
       />
-    </div>
+    </section>
   );
 };
 
