@@ -28,6 +28,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
   const [forgotSent, setForgotSent] = useState(false);
   const [forgotError, setForgotError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [alert, setAlert] = useState<{ type: "success" | "error"; message: string } | null>(null);
 
   useEffect(() => {
     if (error) {
@@ -59,11 +60,13 @@ const AuthModal: React.FC<AuthModalProps> = ({
     }
 
     if (success) {
-      onClose();
+      setAlert({ type: "success", message: isLogin ? "Login successful!" : "Registration successful!" });
+      setTimeout(onClose, 1500);
     } else {
       setLocalError(
         isLogin ? "Invalid email or password" : "Registration failed",
       );
+      setAlert({ type: "error", message: isLogin ? "Invalid email or password" : "Registration failed" });
     }
 
     clearInputs();
@@ -77,8 +80,10 @@ const AuthModal: React.FC<AuthModalProps> = ({
     try {
       await apiForgotPassword(forgotEmail);
       setForgotSent(true);
+      setAlert({ type: "success", message: "Reset link sent! Check your email." });
     } catch (err) {
       setForgotError("Could not send reset email.");
+      setAlert({ type: "error", message: "Could not send reset email." });
     }
     setLoading(false);
   };
@@ -97,19 +102,46 @@ const AuthModal: React.FC<AuthModalProps> = ({
           {isLogin ? "Login" : "Register"}
         </h2>
 
+        {/* Alert Message */}
+        {alert && (
+          <div
+            role="alert"
+            className={`alert ${
+              alert.type === "success" ? "alert-success" : "alert-error"
+            } flex items-center gap-2 shadow-lg mb-4`}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 shrink-0 stroke-current"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d={
+                  alert.type === "success"
+                    ? "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    : "M6 18L18 6M6 6l12 12"
+                }
+              />
+            </svg>
+            <span>{alert.message}</span>
+          </div>
+        )}
+
         {/* Forgot Password Form */}
         {showForgot ? (
           forgotSent ? (
             <div className="text-center">
-              <p className="text-green-600 mb-4">
-                If that email exists, a reset link has been sent.
-              </p>
               <button
                 className="btn-nav text-sm text-gray-500"
                 onClick={() => {
                   setShowForgot(false);
                   setForgotSent(false);
                   setForgotEmail("");
+                  setAlert(null);
                 }}
               >
                 Back to Login
@@ -244,7 +276,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
                 )}
               </button>
             </form>
-            {/* ...existing switch and close buttons... */}
+            {/* Switch and Close buttons */}
             <div className="mt-4 text-center">
               <button
                 className="text-sm text-blue-500 underline"
