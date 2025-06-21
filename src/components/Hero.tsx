@@ -48,7 +48,7 @@ const Hero = () => {
       {/* Navigation Button */}
       <button
         onClick={handleScrollToOrder}
-        className="absolute left-1/2 bottom-8 -translate-x-1/2 flex flex-col items-center group z-20"
+        className="hidden sm:flex absolute left-1/2 bottom-8 -translate-x-1/2 flex-col items-center group z-20"
         aria-label="Scroll to Order section"
       >
         <span className="text-xl font-bold text-[#422b24]">

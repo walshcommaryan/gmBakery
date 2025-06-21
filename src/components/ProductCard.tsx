@@ -41,14 +41,14 @@ const ProductCard = ({
     <>
       {/* Your existing card */}
       <div
-        className="relative"
+        className="relative min-w-0 w-full max-w-xs mx-auto"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         onClick={() => setModalOpen(true)}
         style={{ cursor: "pointer" }}
       >
         <motion.div
-          className="flex flex-col items-center transition"
+          className="flex flex-col items-center transition p-2"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           whileHover={{
@@ -57,7 +57,7 @@ const ProductCard = ({
           }}
           viewport={{ once: true, amount: 0.2 }}
         >
-          <div className="relative">
+          <div className="relative w-full flex items-center justify-center">
             {/* Gray overlay and "View Description" on hover */}
             <BakeryItem images={images} sizeClass={sizeClass} />
             <AnimatePresence>
@@ -87,10 +87,14 @@ const ProductCard = ({
                 zIndex: 10,
               }}
             >
-              <h2 className="text-lg md:text-xl font-semibold">{name}</h2>
-              <p className="text-gray-500">$ {price}</p>
+              <h2 className="text-lg md:text-xl font-semibold break-words w-full">
+                {name}
+              </h2>
+              <p className="text-gray-500 w-full break-words">$ {price}</p>
               {pack_size > 1 && (
-                <p className="text-xs text-gray-400 mt-1">Pack of {pack_size}</p>
+                <p className="text-xs text-gray-400 mt-1 w-full break-words">
+                  Pack of {pack_size}
+                </p>
               )}
             </div>
           </div>
