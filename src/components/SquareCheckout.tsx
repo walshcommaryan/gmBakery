@@ -12,13 +12,7 @@ export const SquareCheckout = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [pickupLocation, setPickupLocation] = useState("");
   const [pickupDate, setPickupDate] = useState<Date | undefined>();
-  const [errors, setErrors] = useState<{ location?: boolean; date?: boolean }>(
-    {},
-  );
   const [showErrors, setShowErrors] = useState(false);
-
-  const dateRef = React.useRef<HTMLDivElement>(null);
-  const locationRef = React.useRef<HTMLDivElement>(null);
 
   const lineItems: CheckoutOrder[] = Object.values(cart).map((item) => ({
     product_id: item.product_id,
