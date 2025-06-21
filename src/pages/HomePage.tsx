@@ -42,7 +42,7 @@ const HomePage = () => {
       </div>
 
       {/* Everything below Hero is outside the height calculation */}
-      <div id="order-section" className="min-h-screen py-12 bg-pastryYellow">
+      <div id="order-section" className="min-h-screen py-12 bg-pastryWhite">
         <div className="flex flex-col items-center pb-10">
           <h2 className="text-5xl font-bold text-center font-seasons text-[#422b24]">
             Order

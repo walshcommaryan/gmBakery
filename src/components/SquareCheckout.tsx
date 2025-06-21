@@ -55,7 +55,7 @@ export const SquareCheckout = () => {
   };
 
   return (
-    <div className="w-full max-w-xl mx-auto rounded-lg text-black bg-pastryYellow p-6">
+    <div className="w-full max-w-xl mx-auto rounded-lg text-black bg-pastryWhite p-6">
       <form onSubmit={handleCheckout} className="grid grid-cols-1 gap-4">
         <h1 className="text-black text-xl font-bold text-center">
           Total: ${getTotalPrice().toFixed(2)}
