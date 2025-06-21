@@ -42,12 +42,12 @@ const HomePage = () => {
       </div>
 
       {/* Everything below Hero is outside the height calculation */}
-      <div className="min-h-screen py-12 bg-pastryYellow">
-        <div className="flex flex-col items-center pb-20">
+      <div id="order-section" className="min-h-screen py-12 bg-pastryYellow">
+        <div className="flex flex-col items-center pb-10">
           <h2 className="text-5xl font-bold text-center font-seasons text-[#422b24]">
             Order
           </h2>
-          <p className="text-lg italic text-[#422b24]">(for pick up only)</p>
+          <p className="text-xl italic text-[#422b24]">(for pick up only)</p>
         </div>
 
         <ProductGrid items={products} columns={4} />
