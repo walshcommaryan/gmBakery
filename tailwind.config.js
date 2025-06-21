@@ -36,6 +36,7 @@ module.exports = {
         'pastryYellow': "#ffeab6",
         'chocolate': "#422b24",
         'milkChocolate': "#725d57",
+        'whiteChocolate': "#988884",
       },
     },
   },

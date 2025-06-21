@@ -39,7 +39,7 @@ const Locations = () => {
         {/* Page Header */}
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-chocolate">Our Locations</h2>
-          <p className="text-gray-500 text-lg mt-2">
+          <p className="text-milkChocolate text-lg mt-2">
             Find us at local markets throughout the Austin area.
           </p>
         </div>

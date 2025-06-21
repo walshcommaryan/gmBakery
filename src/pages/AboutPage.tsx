@@ -20,14 +20,11 @@ const About = () => {
                     ← Back
                   </button>
                 </div>
-                <h6 className="text-gray-400 text-base font-normal leading-relaxed">
-                  About Us
-                </h6>
                 <div className="w-full flex-col justify-start lg:items-start items-center gap-3 flex">
                   <h2 className="text-chocolate text-4xl font-bold font-manrope leading-normal lg:text-start text-center">
                     The Tale of Our Bakery
                   </h2>
-                  <p className="text-gray-500 text-base font-normal leading-relaxed lg:text-start text-center">
+                  <p className="text-chocolate text-base font-normal leading-relaxed lg:text-start text-center">
                     Founded by a French baker with a passion for precision and
                     tradition, our bakery brings the soul of French patisserie
                     to the heart of Texas. From humble beginnings in Redlands,
@@ -39,38 +36,38 @@ const About = () => {
 
               <div className="w-full flex-col justify-center items-start gap-6 flex">
                 <div className="w-full justify-start items-center gap-8 grid md:grid-cols-2 grid-cols-1">
-                  <div className="w-full h-full p-3.5 rounded-xl border border-gray-200 hover:border-gray-400 transition-all duration-700 ease-in-out flex-col justify-start items-start gap-2.5 inline-flex">
+                  <div className="w-full h-full p-3.5 rounded-xl border border-whiteChocolate hover:border-chocolate transition-all duration-700 ease-in-out flex-col justify-start items-start gap-2.5 inline-flex">
                     <h4 className="text-chocolate text-2xl font-bold font-manrope leading-9">
                       10+ Years
                     </h4>
-                    <p className="text-gray-500 text-base font-normal leading-relaxed">
+                    <p className="text-chocolate text-base font-normal leading-relaxed">
                       Crafting French pastries with excellence.
                     </p>
                   </div>
-                  <div className="w-full h-full p-3.5 rounded-xl border border-gray-200 hover:border-gray-400 transition-all duration-700 ease-in-out flex-col justify-start items-start gap-2.5 inline-flex">
+                  <div className="w-full h-full p-3.5 rounded-xl border border-whiteChocolate hover:border-chocolate transition-all duration-700 ease-in-out flex-col justify-start items-start gap-2.5 inline-flex">
                     <h4 className="text-chocolate text-2xl font-bold font-manrope leading-9">
                       From California to Austin
                     </h4>
-                    <p className="text-gray-500 text-base font-normal leading-relaxed">
+                    <p className="text-chocolate text-base font-normal leading-relaxed">
                       A Redlands favorite, now a Texas treasure.
                     </p>
                   </div>
                 </div>
 
                 <div className="w-full h-full justify-start items-center gap-8 grid md:grid-cols-2 grid-cols-1">
-                  <div className="w-full p-3.5 rounded-xl border border-gray-200 hover:border-gray-400 transition-all duration-700 ease-in-out flex-col justify-start items-start gap-2.5 inline-flex">
+                  <div className="w-full h-full p-3.5 rounded-xl border border-whiteChocolate hover:border-chocolate transition-all duration-700 ease-in-out flex-col justify-start items-start gap-2.5 inline-flex">
                     <h4 className="text-chocolate text-2xl font-bold font-manrope leading-9">
                       2 Farmer's Markets
                     </h4>
-                    <p className="text-gray-500 text-base font-normal leading-relaxed">
+                    <p className="text-chocolate text-base font-normal leading-relaxed">
                       Find us weekly at Wolf Ranch and Dripping Springs.
                     </p>
                   </div>
-                  <div className="w-full h-full p-3.5 rounded-xl border border-gray-200 hover:border-gray-400 transition-all duration-700 ease-in-out flex-col justify-start items-start gap-2.5 inline-flex">
+                  <div className="w-full h-full p-3.5 rounded-xl border border-whiteChocolate hover:border-chocolate transition-all duration-700 ease-in-out flex-col justify-start items-start gap-2.5 inline-flex">
                     <h4 className="text-chocolate text-2xl font-bold font-manrope leading-9">
                       Family-Owned
                     </h4>
-                    <p className="text-gray-500 text-base font-normal leading-relaxed">
+                    <p className="text-chocolate text-base font-normal leading-relaxed">
                       Run by family, driven by passion.
                     </p>
                   </div>
