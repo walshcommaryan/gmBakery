@@ -2,6 +2,7 @@
 import * as React from "react";
 import * as Select from "@radix-ui/react-select";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
+import { useEffect } from "react";
 
 interface Props {
   value: string;
@@ -14,6 +15,24 @@ export const PickupLocationSelector: React.FC<Props> = ({
   onChange,
   error,
 }) => {
+  useEffect(() => {
+    // Bug fix for pointer events and scroll lock when using Radix Select
+    const observer = new MutationObserver(() => {
+      if (
+        document.body.style.pointerEvents === "none" ||
+        document.body.getAttribute("data-scroll-locked") === "1"
+      ) {
+        document.body.style.pointerEvents = "";
+        document.body.removeAttribute("data-scroll-locked");
+      }
+    });
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ["style", "data-scroll-locked"],
+    });
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="w-full">
       <label className="text-sm font-medium text-black mb-1 inline-block">
@@ -31,7 +50,9 @@ export const PickupLocationSelector: React.FC<Props> = ({
           </Select.Icon>
         </Select.Trigger>
         <Select.Portal>
-          <Select.Content className="bg-white border border-gray-300 rounded-md shadow mt-1 z-50">
+          <Select.Content
+            className="bg-white border border-gray-300 rounded-md shadow mt-1 z-50"
+          >
             <Select.Viewport className="p-1">
               <Select.Item
                 value="Wolf Ranch Farmers Market"
