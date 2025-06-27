@@ -77,31 +77,32 @@ export const PickupDateSelector: React.FC<Props> = ({
                     const candidate = new Date(date);
                     candidate.setHours(0, 0, 0, 0);
 
-                    const isSaturday = candidate.getDay() === 6;
-                    if (!isSaturday) return true;
+                    // Only allow Saturdays
+                    if (candidate.getDay() !== 6) return true;
 
-                    const isToday = candidate.getTime() === today.getTime();
-                    if (isToday) return true;
-
+                    // No past dates
                     if (candidate < today) return true;
 
+                    // Find most recent Wednesday 11:59:59pm
+                    const wednesday = new Date(today);
+                    const daysSinceWednesday = (today.getDay() + 7 - 3) % 7; // 3 = Wednesday
+                    wednesday.setDate(today.getDate() - daysSinceWednesday);
+                    wednesday.setHours(23, 59, 59, 999);
+
+                    // Find this coming Saturday
                     const thisSaturday = new Date(today);
-                    thisSaturday.setDate(
-                      today.getDate() + ((6 - today.getDay() + 7) % 7),
-                    );
+                    thisSaturday.setDate(today.getDate() + ((6 - today.getDay() + 7) % 7));
                     thisSaturday.setHours(0, 0, 0, 0);
 
-                    const cutoff = new Date(today);
-                    cutoff.setDate(
-                      today.getDate() + ((3 - today.getDay() + 7) % 7),
-                    );
-                    cutoff.setHours(23, 59, 59, 999);
+                    // If candidate is this coming Saturday and today is after cutoff, disable it
+                    if (
+                      candidate.getTime() === thisSaturday.getTime() &&
+                      new Date() > wednesday
+                    ) {
+                      return true;
+                    }
 
-                    const isThisSaturday =
-                      candidate.getTime() === thisSaturday.getTime();
-                    const pastCutoff = new Date() > cutoff;
-
-                    return isThisSaturday && pastCutoff;
+                    return false;
                   }}
                 />
               </motion.div>
