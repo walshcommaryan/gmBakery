@@ -7,7 +7,7 @@ import CheckoutModal from "../components/CheckoutModal";
 import CheckOutPage from "./CheckoutPage";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const HomePage = () => {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
@@ -93,11 +93,13 @@ const HomePage = () => {
         </div>
       </footer>
 
-      {isCheckoutOpen && (
-        <CheckoutModal onClose={() => setIsCheckoutOpen(false)}>
-          <CheckOutPage onClose={() => setIsCheckoutOpen(false)} />
-        </CheckoutModal>
-      )}
+      <AnimatePresence>
+        {isCheckoutOpen && (
+          <CheckoutModal onClose={() => setIsCheckoutOpen(false)}>
+            <CheckOutPage onClose={() => setIsCheckoutOpen(false)} />
+          </CheckoutModal>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

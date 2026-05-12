@@ -89,10 +89,9 @@ const AuthModal: React.FC<AuthModalProps> = ({
     setLoading(false);
   };
 
-  if (!isOpen) return null;
-
   return (
     <AnimatePresence>
+      {!isOpen ? null : (
       <motion.div
         className="fixed inset-0 bg-chocolate/30 backdrop-blur-sm flex items-center justify-center z-50 p-4"
         initial={{ opacity: 0 }}
@@ -317,6 +316,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
           )}
         </motion.div>
       </motion.div>
+      )}
     </AnimatePresence>
   );
 };

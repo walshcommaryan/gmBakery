@@ -231,11 +231,13 @@ const NavBar: React.FC<NavBarProps> = ({
         loginRequired={loginRequired}
       />
 
-      {isCheckoutOpen && (
-        <CheckoutModal onClose={() => setIsCheckoutOpen(false)}>
-          <CheckoutPage onClose={() => setIsCheckoutOpen(false)} />
-        </CheckoutModal>
-      )}
+      <AnimatePresence>
+        {isCheckoutOpen && (
+          <CheckoutModal onClose={() => setIsCheckoutOpen(false)}>
+            <CheckoutPage onClose={() => setIsCheckoutOpen(false)} />
+          </CheckoutModal>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };
