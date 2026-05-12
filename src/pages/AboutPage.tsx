@@ -66,8 +66,8 @@ const About = () => {
                   transition={{ duration: 0.4, delay: 0.2 + i * 0.1 }}
                 >
                   <h4 className="text-xl font-seasons text-chocolate mb-1 group-hover:text-warmGold transition-colors duration-500">
-                    {stat.label.split(/([^A-Za-z0-9\s])/).map((part, j) =>
-                      /^[^A-Za-z0-9\s]$/.test(part) ? (
+                    {stat.label.split(/([^A-Za-z\s])/).map((part, j) =>
+                      /^[^A-Za-z\s]$/.test(part) ? (
                         <span key={j} className="font-bakery">{part}</span>
                       ) : (
                         part
