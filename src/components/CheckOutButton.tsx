@@ -23,10 +23,13 @@ const CheckOutButton: React.FC<CheckOutButtonProps> = ({
   };
 
   return (
-    <button className="btn-nav relative" onClick={handleCheckoutClick}>
+    <button
+      className="inline-flex items-center justify-center h-10 px-5 py-2 rounded-full text-sm font-medium tracking-wide bg-chocolate text-cream hover:bg-milkChocolate transition-all duration-200 active:scale-95 focus:outline-none relative"
+      onClick={handleCheckoutClick}
+    >
       Checkout
       {total > 0 && (
-        <span className="absolute bottom-[78%] left-[98%] sm:bottom-[80%] sm:left-[90%] bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+        <span className="absolute -top-1 -right-1 bg-warmGold text-chocolate text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">
           {total}
         </span>
       )}

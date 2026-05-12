@@ -47,7 +47,6 @@ const OrderSummaryPage: React.FC = () => {
   }, []);
   /* eslint-disable react-hooks/exhaustive-deps */
 
-  // Reset backend flag if user refreshes or closes tab
   useEffect(() => {
     const handleUnload = () => {
       resetPaymentConfirmation();
@@ -59,41 +58,53 @@ const OrderSummaryPage: React.FC = () => {
     };
   }, []);
 
-  // Reset backend flag if user clicks "Back to Home"
   const handleBackToHome = async () => {
     await resetPaymentConfirmation();
     navigate("/");
   };
 
-  // prevent back nav to Square
   useEffect(() => {
     window.history.replaceState(null, "", window.location.href);
   }, []);
 
-  if (checking || loading) return <div className="bg-[#fbfaf6] h-screen" />;
+  if (checking || loading) {
+    return (
+      <div className="bg-pastryWhite min-h-screen flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-chocolate/20 border-t-chocolate rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
-    <section className="py-12 bg-[#fbfaf6] font-bakery min-h-screen">
-      <div className="w-full max-w-7xl px-4 md:px-6 mx-auto">
-        <div className="text-center mb-10">
-          <h1 className="text-4xl font-bold text-chocolate">
-            Your Order is Confirmed!
+    <section className="py-12 bg-pastryWhite font-bakery min-h-screen relative">
+      <div className="absolute inset-0 bg-grain opacity-20 pointer-events-none" />
+
+      <div className="w-full max-w-7xl px-6 md:px-10 mx-auto relative z-10">
+        <div className="text-center mb-12">
+          <div className="flex items-center justify-center gap-3 mb-3">
+            <div className="w-8 h-[1px] bg-warmGold" />
+            <span className="text-xs font-medium tracking-[0.3em] uppercase text-warmGold">
+              Thank You
+            </span>
+            <div className="w-8 h-[1px] bg-warmGold" />
+          </div>
+          <h1 className="text-3xl sm:text-4xl font-seasons text-chocolate">
+            Your Order is Confirmed
           </h1>
-          <p className="mt-2 text-lg text-gray-600">
-            Thank you for your purchase. A confirmation email will be sent
-            shortly.
+          <p className="mt-2 text-milkChocolate">
+            A confirmation email will be sent shortly.
           </p>
         </div>
 
         <div className="flex flex-col xl:flex-row gap-10">
           {/* Order Summary */}
           <div className="w-full xl:max-w-sm">
-            <div className="p-6 border border-gray-200 rounded-3xl bg-white shadow-md">
-              <h2 className="text-3xl font-bold text-black pb-6 border-b border-gray-200">
+            <div className="p-6 border border-chocolate/5 rounded-2xl bg-cream/60 backdrop-blur-sm">
+              <h2 className="text-2xl font-seasons text-chocolate pb-5 border-b border-chocolate/5">
                 Order Summary
               </h2>
-              <div className="py-6 border-b border-gray-200 space-y-4">
-                <div className="flex justify-between text-lg text-gray-600">
+              <div className="py-5 border-b border-chocolate/5">
+                <div className="flex justify-between text-milkChocolate">
                   <span>Product Cost</span>
                   <span>
                     {latestOrder?.total_amount
@@ -102,23 +113,23 @@ const OrderSummaryPage: React.FC = () => {
                   </span>
                 </div>
               </div>
-              <div className="flex justify-between pt-6 text-xl font-bold text-chocolate">
+              <div className="flex justify-between pt-5 text-lg font-medium text-chocolate">
                 <span>Total</span>
-                <span>
+                <span className="text-warmGold">
                   {latestOrder?.total_amount
                     ? `$${Number(latestOrder.total_amount).toFixed(2)}`
                     : "--"}
                 </span>
               </div>
-              <div className="pt-6 text-left text-gray-600 text-sm space-y-1">
+              <div className="pt-5 text-sm text-milkChocolate space-y-2">
                 {latestOrder?.location && (
                   <p>
-                    <strong>📍 Pickup Location:</strong> {latestOrder.location}
+                    <span className="text-whiteChocolate">Pickup:</span> {latestOrder.location}
                   </p>
                 )}
                 {latestOrder?.pickup_date && (
                   <p>
-                    <strong>📅 Pickup Date:</strong>{" "}
+                    <span className="text-whiteChocolate">Date:</span>{" "}
                     {new Date(latestOrder.pickup_date).toLocaleDateString()}
                   </p>
                 )}
@@ -127,16 +138,13 @@ const OrderSummaryPage: React.FC = () => {
           </div>
 
           {/* Order Items */}
-          <div className="w-full text-black flex-grow space-y-4">
+          <div className="w-full flex-grow">
             <CheckOutGrid items={orderItems} readOnly={true} />
           </div>
         </div>
 
         <div className="text-center mt-12">
-          <button
-            onClick={handleBackToHome}
-            className="inline-block px-6 py-3 btn-nav transition-all font-semibold"
-          >
+          <button onClick={handleBackToHome} className="btn-primary">
             Back to Home
           </button>
         </div>

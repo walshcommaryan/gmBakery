@@ -13,10 +13,10 @@ const ProductGrid = ({ items, columns }: ProductGridProps) => {
     return `${prefix}:grid-cols-${count}`;
   };
   return (
-    <div className="container mx-auto px-4 -mt-8">
+    <div className="container mx-auto px-4 relative z-10">
       <div
-        className={`grid gap-6
-          grid-cols-1
+        className={`grid gap-8
+          grid-cols-2
           ${getColsClass("sm", columns)}
           ${getColsClass("md", columns)}
           ${getColsClass("lg", columns)}
@@ -25,8 +25,8 @@ const ProductGrid = ({ items, columns }: ProductGridProps) => {
       >
         {items.map((item) => {
           return (
-            <div className="relative">
-              <div className="absolute -top-2 right-36 sm:top-0 sm:-right-6 md:top-0 -md:right-0 lg:top-0 lg:right-2 xl:top-0 xl:right-12 z-30">
+            <div className="relative" key={item.product_id}>
+              <div className="absolute -top-2 right-28 sm:top-0 sm:-right-6 md:top-0 -md:right-0 lg:top-0 lg:right-2 xl:top-0 xl:right-12 z-30">
                 <Counter
                   name={item.name}
                   price={item.price}

@@ -7,6 +7,7 @@ import CheckoutModal from "../components/CheckoutModal";
 import CheckOutPage from "./CheckoutPage";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const HomePage = () => {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
@@ -24,10 +25,18 @@ const HomePage = () => {
     }
   }, [location.search]);
 
-  if (loading) return <div></div>;
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-pastryWhite flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 border-2 border-chocolate/20 border-t-chocolate rounded-full animate-spin" />
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="bg-pastryWhite text-gray-600 font-bakery">
+    <div className="bg-pastryWhite text-chocolate font-bakery">
       {/* NavBar + Hero fill the viewport */}
       <div className="min-h-screen flex flex-col">
         <NavBar
@@ -41,21 +50,48 @@ const HomePage = () => {
         </div>
       </div>
 
-      {/* Everything below Hero is outside the height calculation */}
-      <div id="order-section" className="min-h-screen py-12 bg-pastryWhite">
-        <div className="flex flex-col items-center pb-10">
-          <h2 className="text-5xl font-bold text-center font-seasons text-[#422b24]">
+      {/* Order Section */}
+      <div id="order-section" className="min-h-screen py-16 bg-pastryWhite relative">
+        <div className="absolute inset-0 bg-grain opacity-20 pointer-events-none" />
+
+        <motion.div
+          className="flex flex-col items-center pb-12 relative z-10"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="flex items-center gap-4 mb-3">
+            <div className="w-12 h-[1px] bg-warmGold" />
+            <span className="text-xs font-medium tracking-[0.3em] uppercase text-warmGold">
+              Menu
+            </span>
+            <div className="w-12 h-[1px] bg-warmGold" />
+          </div>
+          <h2 className="text-4xl sm:text-5xl font-seasons text-chocolate">
             Order
           </h2>
-          <p className="text-xl italic text-[#422b24]">(for pick up only)</p>
-        </div>
+          <p className="text-sm tracking-wide text-milkChocolate mt-2">
+            For pick up only
+          </p>
+        </motion.div>
 
         <ProductGrid items={products} columns={4} />
       </div>
 
-      <section className="min-h-screen">
+      {/* Contact Section */}
+      <section className="relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-pastryWhite to-cream pointer-events-none" />
         <Contact />
       </section>
+
+      {/* Footer */}
+      <footer className="bg-chocolate text-cream/60 py-8">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-sm">GM Petit Cafe</p>
+          <p className="text-xs">Handcrafted with love in Austin, TX</p>
+        </div>
+      </footer>
 
       {isCheckoutOpen && (
         <CheckoutModal onClose={() => setIsCheckoutOpen(false)}>

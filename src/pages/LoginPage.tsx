@@ -16,38 +16,46 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-300 text-gray-600 font-bakery py-10">
-      <div className="rounded-square-w mx-auto max-w-md bg-white p-8 shadow-md">
-        <div className="flex justify-between p-4">
-          <div></div>
-          <div></div>
-          <button className="btn-nav" onClick={() => navigate("/")}>
-            Back
-          </button>
+    <div className="min-h-screen bg-pastryWhite font-bakery flex items-center justify-center px-4">
+      <div className="w-full max-w-sm">
+        <div className="bg-cream rounded-2xl shadow-xl p-8 border border-chocolate/5">
+          <div className="flex justify-end mb-4">
+            <button className="btn-nav text-sm" onClick={() => navigate("/")}>
+              &larr; Home
+            </button>
+          </div>
+          <h2 className="text-2xl font-seasons text-chocolate text-center mb-6">Login</h2>
+          <form onSubmit={handleLogin} className="flex flex-col gap-4">
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="login-field"
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="login-field"
+            />
+            {error && <p className="text-red-500 text-sm">{error}</p>}
+            <button
+              type="submit"
+              disabled={loading}
+              className="button-submit flex items-center justify-center min-h-[48px] disabled:opacity-70"
+            >
+              {loading ? (
+                <span className="loading loading-spinner loading-md text-cream"></span>
+              ) : (
+                "Sign In"
+              )}
+            </button>
+          </form>
         </div>
-        <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
-        <form onSubmit={handleLogin} className="flex flex-col gap-4">
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="p-2 border rounded"
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="p-2 border rounded"
-          />
-          {error && <p className="text-red-500 text-sm">{error}</p>}
-          <button type="submit" disabled={loading} className="btn-nav">
-            {loading ? "Logging in..." : "Login"}
-          </button>
-        </form>
       </div>
     </div>
   );

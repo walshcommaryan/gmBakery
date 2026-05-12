@@ -42,7 +42,6 @@ const ResetPasswordPage: React.FC = () => {
     setLoading(false);
   };
 
-  // Handle invalid/expired token error
   const isTokenError =
     error &&
     (error.toLowerCase().includes("token") ||
@@ -51,17 +50,14 @@ const ResetPasswordPage: React.FC = () => {
   if (success) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-pastryWhite font-bakery">
-        <div className="bg-white rounded-xl shadow-lg p-8 max-w-sm w-full border border-[#f6e6c8]">
-          <h2 className="text-2xl font-bold mb-4 text-[#422b24] font-seasons">
+        <div className="bg-cream rounded-2xl shadow-xl p-8 max-w-sm w-full border border-chocolate/5">
+          <h2 className="text-2xl font-seasons mb-4 text-chocolate">
             Password Reset Successful
           </h2>
-          <p className="mb-4 text-[#422b24]">
+          <p className="mb-6 text-milkChocolate">
             You can now log in with your new password.
           </p>
-          <a
-            href="/?login=true"
-            className="bg-[#422b24] hover:bg-[#6d4c41] text-white font-bold py-2 px-6 rounded transition"
-          >
+          <a href="/?login=true" className="btn-primary inline-block">
             Go to Login
           </a>
         </div>
@@ -69,28 +65,24 @@ const ResetPasswordPage: React.FC = () => {
     );
   }
 
-  // Show token error UI
   if (isTokenError) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-pastryWhite font-bakery">
-        <div className="bg-white rounded-xl shadow-lg p-8 max-w-sm w-full border border-[#f6e6c8] text-center">
-          <h2 className="text-2xl font-bold mb-4 text-[#422b24] font-seasons">
+        <div className="bg-cream rounded-2xl shadow-xl p-8 max-w-sm w-full border border-chocolate/5 text-center">
+          <h2 className="text-2xl font-seasons mb-4 text-chocolate">
             Link Expired or Invalid
           </h2>
-          <p className="mb-4 text-[#422b24]">
+          <p className="mb-6 text-milkChocolate">
             Your password reset link is invalid or has expired.
           </p>
-          <a
-            href="/?login=true"
-            className="bg-[#422b24] hover:bg-[#6d4c41] text-white font-bold py-2 px-6 rounded transition inline-block"
-          >
+          <a href="/?login=true" className="btn-primary inline-block">
             Back to Login
           </a>
-          <p className="mt-4 text-sm text-[#422b24]">
+          <p className="mt-4 text-sm text-milkChocolate">
             Need a new link?{" "}
             <a
               href="/forgot-password"
-              className="underline text-[#422b24] hover:text-[#6d4c41]"
+              className="text-warmGold hover:text-chocolate transition-colors"
             >
               Request password reset
             </a>
@@ -101,72 +93,70 @@ const ResetPasswordPage: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-pastryWhite font-bakery">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-pastryWhite font-bakery px-4">
       <form
         onSubmit={handleSubmit}
-        className="bg-white rounded-xl shadow-lg p-8 max-w-sm w-full flex flex-col gap-4 border border-[#f6e6c8]"
+        className="bg-cream rounded-2xl shadow-xl p-8 max-w-sm w-full flex flex-col gap-4 border border-chocolate/5"
       >
-        <h2 className="text-2xl font-bold mb-2 text-center text-[#422b24] font-seasons">
+        <h2 className="text-2xl font-seasons text-center text-chocolate mb-2">
           Reset Your Password
         </h2>
-        {/* Password Field with Eye Icon */}
         <div className="relative">
           <input
             type={showPassword ? "text" : "password"}
             placeholder="New password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="login-field text-black border border-[#f6e6c8] rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#f6e6c8] w-full pr-10"
+            className="login-field w-full pr-10"
             required
             minLength={6}
           />
           <button
             type="button"
-            className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-whiteChocolate hover:text-milkChocolate transition-colors"
             onClick={() => setShowPassword((v) => !v)}
             tabIndex={-1}
             aria-label={showPassword ? "Hide password" : "Show password"}
           >
             {showPassword ? (
-              <EyeSlashIcon className="h-5 w-5" />
+              <EyeSlashIcon className="h-4 w-4" />
             ) : (
-              <EyeIcon className="h-5 w-5" />
+              <EyeIcon className="h-4 w-4" />
             )}
           </button>
         </div>
-        {/* Confirm Password Field with Eye Icon */}
         <div className="relative">
           <input
             type={showConfirm ? "text" : "password"}
             placeholder="Confirm new password"
             value={confirm}
             onChange={(e) => setConfirm(e.target.value)}
-            className="login-field border text-black border-[#f6e6c8] rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#f6e6c8] w-full pr-10"
+            className="login-field w-full pr-10"
             required
             minLength={6}
           />
           <button
             type="button"
-            className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-whiteChocolate hover:text-milkChocolate transition-colors"
             onClick={() => setShowConfirm((v) => !v)}
             tabIndex={-1}
             aria-label={showConfirm ? "Hide password" : "Show password"}
           >
             {showConfirm ? (
-              <EyeSlashIcon className="h-5 w-5" />
+              <EyeSlashIcon className="h-4 w-4" />
             ) : (
-              <EyeIcon className="h-5 w-5" />
+              <EyeIcon className="h-4 w-4" />
             )}
           </button>
         </div>
         {error && <p className="text-red-500 text-sm">{error}</p>}
         <button
           type="submit"
-          className="bg-[#422b24] hover:bg-[#6d4c41] text-white font-bold py-2 px-6 rounded transition flex items-center justify-center"
+          className="button-submit flex items-center justify-center min-h-[48px]"
           disabled={loading}
         >
           {loading ? (
-            <span className="loading loading-spinner loading-md text-white"></span>
+            <span className="loading loading-spinner loading-md text-cream"></span>
           ) : (
             "Reset Password"
           )}

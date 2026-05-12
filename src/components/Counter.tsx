@@ -34,27 +34,27 @@ const Counter: React.FC<CounterProps> = ({ name, price, product_id }) => {
   return (
     <div>
       {quantity > 0 ? (
-        <div className="flex items-center gap-0 bg-white rounded-full shadow-md px-1 py-0.5">
+        <div className="flex items-center gap-0 bg-cream/90 backdrop-blur-sm rounded-full shadow-md px-1 py-0.5 border border-chocolate/5">
           <button
             onClick={handleRemove}
             ref={minusScope}
-            className="w-5 h-5 flex items-center justify-center bg-[#f0e7dd] hover:bg-[#e6d7c6] text-black rounded-full transition-colors"
+            className="w-6 h-6 flex items-center justify-center bg-pastryWhite hover:bg-softRose text-chocolate rounded-full transition-colors"
           >
             {quantity === 1 ? (
-              <TrashIcon className="w-3 h-3 text-red-500" />
+              <TrashIcon className="w-3 h-3 text-red-400" />
             ) : (
               <MinusIcon className="w-3 h-3" />
             )}
           </button>
 
-          <span className="text-sm text-center w-6 font-semibold">
+          <span className="text-sm text-center w-6 font-medium text-chocolate">
             {quantity}
           </span>
 
           <button
             onClick={handleAdd}
             ref={plusScope}
-            className="w-5 h-5 flex items-center justify-center bg-[#f0e7dd] hover:bg-[#e6d7c6] text-black rounded-full transition-colors"
+            className="w-6 h-6 flex items-center justify-center bg-pastryWhite hover:bg-warmGold/20 text-chocolate rounded-full transition-colors"
           >
             <PlusIcon className="w-3 h-3" />
           </button>
@@ -63,7 +63,7 @@ const Counter: React.FC<CounterProps> = ({ name, price, product_id }) => {
         <button
           onClick={() => addItem(name, price, product_id)}
           ref={plusScope}
-          className="w-6 h-6 flex items-center justify-center bg-[#f0e7dd] hover:bg-[#e6d7c6] text-black rounded-full shadow-md transition-colors"
+          className="w-7 h-7 flex items-center justify-center bg-cream/90 backdrop-blur-sm hover:bg-warmGold/20 text-chocolate rounded-full shadow-md border border-chocolate/5 transition-colors"
         >
           <PlusIcon className="w-4 h-4" />
         </button>

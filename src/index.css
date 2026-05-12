@@ -2,20 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
 @font-face {
   font-family: 'Seasons';
   src: url('/public/assets/fonts/Fontspring-DEMO-theseasons-reg.otf') format('opentype');
@@ -26,7 +12,14 @@ code {
 @font-face {
   font-family: 'Epilogue';
   src: url('/public/assets/fonts/Epilogue-Light.ttf') format('truetype');
-  font-weight: normal;
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Epilogue';
+  src: url('/public/assets/fonts/Epilogue-Medium.ttf') format('truetype');
+  font-weight: 500;
   font-style: normal;
 }
 
@@ -37,77 +30,99 @@ code {
   font-style: normal;
 }
 
-
-.btn-nav {
-  @apply inline-flex items-center justify-center h-10 px-4 py-2 rounded-md 
-          text-sm font-medium text-milkChocolate border border-milkChocolate
-          hover:text-chocolate hover:border-chocolate transition
-          active:scale-95 focus:outline-none;
+body {
+  margin: 0;
+  font-family: 'Epilogue', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f5ede3;
+  color: #3b2218;
 }
 
-.btn-drop {
-  @apply inline-flex items-center justify-center h-10 px-4 py-2 rounded-md bg-white
-          text-sm font-medium text-gray-700 border border-gray-400
-          hover:text-gray-900 hover:border-gray-600 transition
-          active:scale-95 focus:outline-none;
+::selection {
+  background-color: #c8a96e;
+  color: #3b2218;
 }
 
-.btn {
-  @apply inline-flex items-center justify-center px-8 py-2
-          text-base border border-milkChocolate
-          hover:text-chocolate hover:border-chocolate transition
-          active:scale-95 focus:outline-none
-          rounded-md text-milkChocolate font-bold bg-white shadow-md shadow-gray-400;
-}
+@layer components {
+  .btn-nav {
+    @apply inline-flex items-center justify-center h-10 px-5 py-2 rounded-full
+            text-sm font-medium tracking-wide text-milkChocolate
+            hover:text-chocolate hover:bg-warmGold/10 transition-all duration-200
+            active:scale-95 focus:outline-none;
+  }
 
+  .btn-drop {
+    @apply inline-flex items-center justify-center h-10 px-4 py-2 rounded-full bg-white
+            text-sm font-medium text-gray-700
+            hover:text-gray-900 hover:bg-gray-50 transition-all duration-200
+            active:scale-95 focus:outline-none;
+  }
 
-.hero-text {
-  @apply text-7xl sm:text-6xl lg:text-7xl xl:text-8xl font-seasons text-[#422b24]
-}
+  .btn {
+    @apply inline-flex items-center justify-center px-8 py-3
+            text-sm font-medium tracking-wider uppercase
+            border border-chocolate/20 text-chocolate
+            hover:bg-chocolate hover:text-cream transition-all duration-300
+            active:scale-95 focus:outline-none
+            rounded-full bg-cream shadow-sm;
+  }
 
-.hero-sub-text {
-  @apply text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-benedict text-[#422b24]
-}
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-8 py-3
+            text-sm font-medium tracking-wider uppercase
+            bg-chocolate text-cream
+            hover:bg-milkChocolate transition-all duration-300
+            active:scale-95 focus:outline-none
+            rounded-full shadow-lg shadow-chocolate/20;
+  }
 
-.hero-text-sm {
-  @apply text-xl sm:text-2xl lg:text-3xl xl:text-4xl text-white
-}
+  .hero-text {
+    @apply text-5xl sm:text-[3.5rem] lg:text-[4.5rem] xl:text-[5.5rem] font-seasons text-chocolate leading-[1.1];
+  }
 
-.rounded-square-w {
-  @apply w-[70%] bg-white border rounded-3xl px-10 py-10;
+  .hero-sub-text {
+    @apply text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-benedict text-warmGold leading-[1.1];
+  }
 
-} 
+  .section-wrapper {
+    @apply px-6 py-12 mx-auto max-w-screen-md;
+  }
 
-.rounded-square-h {
-  @apply bg-blue-500 border rounded-3xl
-}
+  .section-title {
+    @apply mb-4 text-3xl sm:text-4xl tracking-tight font-seasons text-center text-chocolate;
+  }
 
-.login-field {
-  @apply p-2 border rounded bg-white
-}
+  .section-description {
+    @apply mb-10 font-light text-center text-milkChocolate sm:text-lg;
+  }
 
-.section-wrapper {
-  @apply px-4 py-8 mx-auto max-w-screen-md;
-}
+  .label-base {
+    @apply block mb-2 text-sm font-medium text-chocolate;
+  }
 
-.section-title {
-  @apply mb-4 text-4xl tracking-tight font-extrabold text-center text-[#422b24];
-}
+  .input-base {
+    @apply block w-full text-sm text-chocolate bg-cream border border-chocolate/10
+           rounded-xl p-3 transition-all duration-200
+           focus:border-warmGold focus:ring-1 focus:ring-warmGold/30 focus:outline-none
+           placeholder:text-whiteChocolate;
+  }
 
-.section-description {
-  @apply mb-8 lg:mb-16 font-light text-center sm:text-xl text-[#422b24];
-}
+  .login-field {
+    @apply w-full p-3 bg-cream border border-chocolate/10 rounded-xl text-sm text-chocolate
+           transition-all duration-200
+           focus:border-warmGold focus:ring-1 focus:ring-warmGold/30 focus:outline-none
+           placeholder:text-whiteChocolate;
+  }
 
-.label-base {
-  @apply block mb-2 text-sm font-medium text-[#422b24];
-}
+  .button-submit {
+    @apply bg-chocolate text-cream hover:bg-milkChocolate
+           focus:outline-none focus:ring-2 focus:ring-warmGold/30
+           font-medium rounded-full text-sm px-8 py-3 tracking-wider uppercase
+           transition-all duration-300 shadow-lg shadow-chocolate/15;
+  }
 
-.input-base {
-  @apply block w-full text-sm text-gray-900 bg-gray-50 border border-gray-300 rounded-lg shadow-sm p-2.5;
-}
-
-
-.button-submit {
-  @apply bg-white border border-gray-300 hover:bg-gray-100 focus:outline-none focus:ring-1 
-         focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-black;
+  .glass-card {
+    @apply bg-white/60 backdrop-blur-md border border-white/40 rounded-2xl shadow-lg;
+  }
 }

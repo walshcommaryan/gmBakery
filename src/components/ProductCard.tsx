@@ -27,7 +27,6 @@ const ProductCard = ({
   const [modalOpen, setModalOpen] = useState(false);
   const [imgIdx, setImgIdx] = useState(0);
 
-  // Carousel controls
   const nextImg = (e: React.MouseEvent) => {
     e.stopPropagation();
     setImgIdx((idx) => (idx + 1) % images.length);
@@ -39,37 +38,32 @@ const ProductCard = ({
 
   return (
     <>
-      {/* Your existing card */}
       <div
-        className="relative min-w-0 w-full max-w-xs mx-auto"
+        className="relative min-w-0 w-full max-w-xs mx-auto cursor-pointer group"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         onClick={() => setModalOpen(true)}
-        style={{ cursor: "pointer" }}
       >
         <motion.div
-          className="flex flex-col items-center transition p-2"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          whileHover={{
-            scale: 1.03,
-            transition: { duration: 0.1 },
-          }}
+          className="flex flex-col items-center p-2"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          whileHover={{ y: -4, transition: { duration: 0.2 } }}
           viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5 }}
         >
           <div className="relative w-full flex items-center justify-center">
-            {/* Gray overlay and "View Description" on hover */}
             <BakeryItem images={images} sizeClass={sizeClass} />
             <AnimatePresence>
               {hovered && (
                 <motion.div
-                  className="absolute inset-0 flex items-center justify-center z-20"
+                  className="absolute inset-0 flex items-center justify-center z-20 rounded-2xl"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                 >
-                  <span className="text-xs sm:text-sm md:text-base font-semibold bg-black/30 px-2 py-1 sm:px-3 sm:py-1.5 rounded text-white font-seasons -translate-y-[100%]">
-                    View Description
+                  <span className="text-xs sm:text-sm font-medium bg-chocolate/70 backdrop-blur-sm px-4 py-2 rounded-full text-cream font-bakery tracking-wide -translate-y-[100%]">
+                    View Details
                   </span>
                 </motion.div>
               )}
@@ -87,12 +81,12 @@ const ProductCard = ({
                 zIndex: 10,
               }}
             >
-              <h2 className="text-lg md:text-xl font-semibold break-words w-full">
+              <h2 className="text-base md:text-lg font-medium break-words w-full text-chocolate">
                 {name}
               </h2>
-              <p className="text-gray-500 w-full break-words">$ {price}</p>
+              <p className="text-milkChocolate w-full break-words text-sm">${price}</p>
               {pack_size > 1 && (
-                <p className="text-xs text-gray-400 mt-1 w-full break-words">
+                <p className="text-xs text-whiteChocolate mt-0.5 w-full break-words">
                   Pack of {pack_size}
                 </p>
               )}
@@ -105,58 +99,60 @@ const ProductCard = ({
       <AnimatePresence>
         {modalOpen && (
           <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-chocolate/40 backdrop-blur-sm p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setModalOpen(false)}
           >
             <motion.div
-              className="bg-white rounded-xl shadow-lg max-w-2xl w-full flex flex-col lg:flex-row overflow-hidden relative max-h-[90vh] overflow-y-auto"
-              initial={{ scale: 0.95 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.95 }}
+              className="bg-cream rounded-2xl shadow-2xl max-w-2xl w-full flex flex-col lg:flex-row overflow-hidden relative max-h-[90vh] overflow-y-auto"
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
               onClick={(e) => e.stopPropagation()}
             >
               {/* Carousel */}
-              <div className="relative w-full lg:w-1/2 flex items-center justify-center bg-white">
+              <div className="relative w-full lg:w-1/2 flex items-center justify-center bg-pastryWhite">
                 <img
                   src={images[imgIdx]}
                   alt={name}
-                  className="object-contain w-full h-64 rounded-lg pointer-events-none"
+                  className="object-contain w-full h-64 lg:h-80 pointer-events-none p-4"
                 />
                 {images.length > 1 && (
-                  <div className="absolute bottom-2 left-0 w-full flex justify-center gap-4 z-10">
+                  <div className="absolute bottom-4 left-0 w-full flex justify-center gap-3 z-10">
                     <button
-                      className="bg-white bg-opacity-80 hover:bg-opacity-100 border border-gray-300 rounded-full w-8 h-8 flex items-center justify-center shadow transition pointer-events-auto"
+                      className="bg-cream/90 backdrop-blur-sm hover:bg-cream border border-chocolate/10 rounded-full w-8 h-8 flex items-center justify-center shadow-sm transition pointer-events-auto"
                       onClick={prevImg}
                       aria-label="Previous image"
                       type="button"
                     >
-                      <span className="text-xl font-bold text-gray-700">&#8592;</span>
+                      <span className="text-sm text-chocolate">&larr;</span>
                     </button>
                     <button
-                      className="bg-white bg-opacity-80 hover:bg-opacity-100 border border-gray-300 rounded-full w-8 h-8 flex items-center justify-center shadow transition pointer-events-auto"
+                      className="bg-cream/90 backdrop-blur-sm hover:bg-cream border border-chocolate/10 rounded-full w-8 h-8 flex items-center justify-center shadow-sm transition pointer-events-auto"
                       onClick={nextImg}
                       aria-label="Next image"
                       type="button"
                     >
-                      <span className="text-xl font-bold text-gray-700">&#8594;</span>
+                      <span className="text-sm text-chocolate">&rarr;</span>
                     </button>
                   </div>
                 )}
               </div>
               {/* Details */}
-              <div className="flex-1 flex flex-col p-6 overflow-y-auto">
-                <h2 className="text-2xl font-bold mb-2">{name}</h2>
-                <p className="text-gray-500 mb-2 text-lg">${price}</p>
+              <div className="flex-1 flex flex-col p-8 overflow-y-auto">
+                <h2 className="text-2xl font-seasons text-chocolate mb-1">{name}</h2>
+                <p className="text-warmGold font-medium text-lg mb-1">${price}</p>
                 {pack_size > 1 && (
-                  <p className="text-xs text-gray-400 mb-2">Pack of {pack_size}</p>
+                  <p className="text-xs text-whiteChocolate mb-3">Pack of {pack_size}</p>
                 )}
-                <p className="mb-4">{description}</p>
+                <div className="w-8 h-[1px] bg-warmGold/40 mb-4" />
+                <p className="text-milkChocolate text-sm leading-relaxed mb-6">{description}</p>
                 <div className="flex justify-end mt-auto">
                   <button
-                    className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 transition"
+                    className="btn-primary text-xs"
                     onClick={() => setModalOpen(false)}
                   >
                     Close

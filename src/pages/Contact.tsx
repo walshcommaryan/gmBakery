@@ -32,7 +32,7 @@ const ContactSection = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setAlert(null); // Clear existing alert
+    setAlert(null);
 
     try {
       await sendEmail(form);
@@ -50,13 +50,28 @@ const ContactSection = () => {
   };
 
   return (
-    <section className="bg-pastryWhite text-chocolate overflow-hidden">
+    <section className="bg-transparent text-chocolate overflow-hidden relative z-10">
       <div className="section-wrapper">
-        <h2 className="section-title">Contact Us</h2>
-        <p className="section-description">
-          Need catering services? We’d love to be part of your event. Let us
-          know here.
-        </p>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="flex items-center justify-center gap-3 mb-3">
+            <div className="w-8 h-[1px] bg-warmGold" />
+            <span className="text-xs font-medium tracking-[0.3em] uppercase text-warmGold">
+              Get in Touch
+            </span>
+            <div className="w-8 h-[1px] bg-warmGold" />
+          </div>
+          <h2 className="section-title">Contact Us</h2>
+          <p className="section-description">
+            Need catering services? We'd love to be part of your event. Let us
+            know here.
+          </p>
+        </motion.div>
+
         <AnimatePresence>
           {alert && (
             <motion.div
@@ -71,11 +86,11 @@ const ContactSection = () => {
                 role="alert"
                 className={`alert ${
                   alert.type === "success" ? "alert-success" : "alert-error"
-                } flex items-center gap-2 shadow-lg`}
+                } flex items-center gap-2 shadow-lg rounded-xl`}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 shrink-0 stroke-current"
+                  className="h-5 w-5 shrink-0 stroke-current"
                   fill="none"
                   viewBox="0 0 24 24"
                 >
@@ -90,14 +105,21 @@ const ContactSection = () => {
                     }
                   />
                 </svg>
-                <span>{alert.message}</span>
+                <span className="text-sm">{alert.message}</span>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
 
-        <form className="space-y-4" onSubmit={handleSubmit}>
-          <div>
+        <motion.form
+          className="space-y-4"
+          onSubmit={handleSubmit}
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <input
               type="text"
               id="name"
@@ -108,8 +130,6 @@ const ContactSection = () => {
               value={form.name}
               required
             />
-          </div>
-          <div>
             <input
               type="email"
               id="email"
@@ -121,18 +141,16 @@ const ContactSection = () => {
               required
             />
           </div>
-          <div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <input
               type="tel"
               id="phone"
               name="phone"
               className="input-base"
-              placeholder="Phone Number (optional)"
+              placeholder="Phone number (optional)"
               onChange={handleChange}
               value={form.phone}
             />
-          </div>
-          <div>
             <input
               type="text"
               id="subject"
@@ -143,31 +161,31 @@ const ContactSection = () => {
               value={form.subject}
             />
           </div>
-          <div className="sm:col-span-2">
-            <textarea
-              id="message"
-              name="message"
-              rows={2}
-              className="input-base"
-              placeholder="Leave a comment"
-              onChange={handleChange}
-              value={form.message}
-            />
-          </div>
+          <textarea
+            id="message"
+            name="message"
+            rows={4}
+            className="input-base resize-none"
+            placeholder="Your message..."
+            onChange={handleChange}
+            value={form.message}
+          />
 
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="relative button-submit min-h-[48px] px-10 flex items-center justify-center disabled:opacity-70"
-          >
-            <span className={isLoading ? "invisible" : ""}>Submit</span>
-            {isLoading && (
-              <span className="absolute">
-                <span className="loading loading-spinner loading-md text-black" />
-              </span>
-            )}
-          </button>
-        </form>
+          <div className="flex justify-center pt-2">
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="relative button-submit min-h-[48px] min-w-[160px] flex items-center justify-center disabled:opacity-70"
+            >
+              <span className={isLoading ? "invisible" : ""}>Send Message</span>
+              {isLoading && (
+                <span className="absolute">
+                  <span className="loading loading-spinner loading-md text-cream" />
+                </span>
+              )}
+            </button>
+          </div>
+        </motion.form>
       </div>
     </section>
   );

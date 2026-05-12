@@ -44,49 +44,61 @@ const OrderHistoryPage: React.FC = () => {
 
   if (loading)
     return (
-      <div className="bg-[#fbfaf6] min-h-screen flex items-center justify-center font-bakery">
-        <span className="loading loading-spinner loading-lg text-chocolate"></span>
+      <div className="bg-pastryWhite min-h-screen flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-chocolate/20 border-t-chocolate rounded-full animate-spin" />
       </div>
     );
 
   return (
-    <div className="bg-[#fbfaf6] min-h-screen py-12 font-bakery">
-      <div className="w-full max-w-6xl px-4 md:px-6 mx-auto">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold text-chocolate">
-            Your Order History
-          </h1>
+    <div className="bg-pastryWhite min-h-screen py-12 font-bakery relative">
+      <div className="absolute inset-0 bg-grain opacity-20 pointer-events-none" />
+
+      <div className="w-full max-w-6xl px-6 md:px-10 mx-auto relative z-10">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-4">
+          <div>
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-8 h-[1px] bg-warmGold" />
+              <span className="text-xs font-medium tracking-[0.3em] uppercase text-warmGold">
+                Account
+              </span>
+            </div>
+            <h1 className="text-3xl font-seasons text-chocolate">
+              Order History
+            </h1>
+          </div>
           <button
             onClick={() => navigate("/")}
-            className="px-4 py-2 btn-nav transition-all font-semibold"
+            className="btn-nav"
           >
-            Back to Home
+            &larr; Back to Home
           </button>
         </div>
 
         {orders.length === 0 && (
-          <p className="text-gray-700">No past orders found.</p>
+          <p className="text-milkChocolate">No past orders found.</p>
         )}
 
         {paginatedOrders.map((order) => (
           <div
             key={order.order_id}
-            className="mb-8 p-6 border rounded-2xl bg-white shadow"
+            className="mb-8 p-6 border border-chocolate/5 rounded-2xl bg-cream/60 backdrop-blur-sm"
           >
-            <div className="mb-4 space-y-1 text-sm text-gray-700">
-              <p>
-                <strong>Order ID:</strong> {order.order_id}
-              </p>
-              <p>
-                <strong>Date:</strong>{" "}
+            <div className="mb-4 flex flex-wrap gap-x-6 gap-y-1 text-sm text-milkChocolate">
+              <span>
+                <span className="text-whiteChocolate">Order</span> #{order.order_id}
+              </span>
+              <span>
+                <span className="text-whiteChocolate">Date:</span>{" "}
                 {new Date(order.order_date).toLocaleString()}
-              </p>
-              <p>
-                <strong>Status:</strong> {order.status}
-              </p>
-              <p>
-                <strong>Total:</strong> ${Number(order.total_amount).toFixed(2)}
-              </p>
+              </span>
+              <span>
+                <span className="text-whiteChocolate">Status:</span>{" "}
+                <span className="text-chocolate font-medium">{order.status}</span>
+              </span>
+              <span>
+                <span className="text-whiteChocolate">Total:</span>{" "}
+                <span className="text-warmGold font-medium">${Number(order.total_amount).toFixed(2)}</span>
+              </span>
             </div>
 
             <CheckOutGrid items={order.items} readOnly={true} />
@@ -95,23 +107,23 @@ const OrderHistoryPage: React.FC = () => {
 
         {/* Pagination Controls */}
         {totalPages > 1 && (
-          <div className="flex justify-center gap-4 mt-10">
+          <div className="flex justify-center items-center gap-4 mt-10">
             <button
               onClick={() => setPage((p) => Math.max(p - 1, 1))}
               disabled={page === 1}
-              className="btn-nav disabled:opacity-50"
+              className="btn-nav disabled:opacity-30"
             >
-              Previous
+              &larr; Previous
             </button>
-            <span className="px-4 py-2 font-semibold text-gray-600">
-              Page {page} of {totalPages}
+            <span className="text-sm text-milkChocolate">
+              {page} / {totalPages}
             </span>
             <button
               onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
               disabled={page === totalPages}
-              className="btn-nav disabled:opacity-50"
+              className="btn-nav disabled:opacity-30"
             >
-              Next
+              Next &rarr;
             </button>
           </div>
         )}

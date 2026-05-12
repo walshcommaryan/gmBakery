@@ -22,9 +22,9 @@ const CheckOutCard: React.FC<Props> = ({
   const totalUnits = finalQuantity * (pack_size || 1);
 
   return (
-    <div className="flex flex-col sm:flex-row items-center gap-4 bg-white shadow-md ring-1 ring-slate-200 rounded-xl p-4">
+    <div className="flex flex-col sm:flex-row items-center gap-4 bg-cream/60 border border-chocolate/5 rounded-xl p-4 transition-all duration-200 hover:border-chocolate/10">
       {/* Image */}
-      <div className="w-24 h-24 sm:w-20 sm:h-20 border-2 border-gray-400 rounded-lg overflow-hidden flex-shrink-0">
+      <div className="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 bg-pastryWhite">
         <img
           src={images[0] || "/assets/images/placeholder.png"}
           alt={name}
@@ -35,12 +35,12 @@ const CheckOutCard: React.FC<Props> = ({
       {/* Content */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:flex-grow w-full gap-2">
         <div className="flex-grow">
-          <h2 className="text-md sm:text-lg font-semibold truncate text-black">
+          <h2 className="text-sm sm:text-base font-medium truncate text-chocolate">
             {name}
           </h2>
 
           {pack_size > 1 && finalQuantity > 0 && (
-            <p className="text-sm text-gray-500">
+            <p className="text-xs text-whiteChocolate">
               {finalQuantity} pack(s) ({totalUnits} total)
             </p>
           )}
@@ -48,16 +48,16 @@ const CheckOutCard: React.FC<Props> = ({
 
         {/* Quantity Section */}
         <div className="flex items-center gap-2 sm:justify-center lg:w-[150px] flex-shrink-0">
-          <p className="text-sm">Qty:</p>
+          <p className="text-xs text-whiteChocolate">Qty:</p>
           {readOnly ? (
-            <p className="text-sm font-medium">{finalQuantity}</p>
+            <p className="text-sm font-medium text-chocolate">{finalQuantity}</p>
           ) : (
             <Counter name={name} price={price} product_id={product_id} />
           )}
         </div>
 
         {/* Price */}
-        <div className="text-right font-bold text-sm sm:text-base w-full sm:w-auto sm:ml-auto">
+        <div className="text-right font-medium text-sm text-warmGold w-full sm:w-auto sm:ml-auto">
           ${(finalQuantity * Number(price)).toFixed(2)}
         </div>
       </div>

@@ -25,7 +25,7 @@ export const SquareCheckout = () => {
     e.preventDefault();
 
     if (!pickupLocation || !pickupDate) {
-      setShowErrors(true); // show red borders
+      setShowErrors(true);
       return;
     }
 
@@ -55,43 +55,46 @@ export const SquareCheckout = () => {
   };
 
   return (
-    <div className="w-full max-w-xl mx-auto rounded-lg text-black bg-pastryWhite p-6">
-      <form onSubmit={handleCheckout} className="grid grid-cols-1 gap-4">
-        <h1 className="text-black text-xl font-bold text-center">
-          Total: ${getTotalPrice().toFixed(2)}
-        </h1>
+    <div className="w-full max-w-xl mx-auto rounded-2xl text-chocolate bg-pastryWhite/50 p-6 border border-chocolate/5">
+      <form onSubmit={handleCheckout} className="grid grid-cols-1 gap-5">
+        <div className="text-center pb-4 border-b border-chocolate/5">
+          <p className="text-xs tracking-[0.2em] uppercase text-whiteChocolate mb-1">
+            Order Total
+          </p>
+          <h1 className="text-3xl font-seasons text-chocolate">
+            ${getTotalPrice().toFixed(2)}
+          </h1>
+          <p className="text-xs text-whiteChocolate mt-1">
+            {totalQty === 0
+              ? "Cart is empty"
+              : `${totalQty} item${totalQty === 1 ? "" : "s"}`}
+          </p>
+        </div>
 
-        <p className="text-black text-xs sm:text-sm text-center mb-36">
-          {totalQty === 0
-            ? "Cart is empty"
-            : `(${totalQty} item${totalQty === 1 ? "" : "s"})`}
-        </p>
+        <div className="space-y-4 pt-2">
+          <PickupDateSelector
+            value={pickupDate}
+            onChange={handlePickupDateChange}
+            error={showErrors && !pickupDate}
+          />
 
-        {/* Date Picker */}
-        <PickupDateSelector
-          value={pickupDate}
-          onChange={handlePickupDateChange}
-          error={showErrors && !pickupDate}
-        />
+          <PickupLocationSelector
+            value={pickupLocation}
+            onChange={handleLocationChange}
+            error={showErrors && !pickupLocation}
+          />
+        </div>
 
-        {/* Location Dropdown */}
-        <PickupLocationSelector
-          value={pickupLocation}
-          onChange={handleLocationChange}
-          error={showErrors && !pickupLocation}
-        />
-
-        {/* Checkout Button */}
         <button
           type="submit"
-          className="btn relative flex items-center justify-center px-10 text-lg min-h-[60px] mx-auto"
+          className="btn-primary relative flex items-center justify-center min-h-[52px] w-full mt-2"
         >
           <span className={isLoading ? "invisible" : ""}>
             Proceed to Checkout
           </span>
           {isLoading && (
             <span className="absolute">
-              <span className="loading loading-spinner loading-md text-black"></span>
+              <span className="loading loading-spinner loading-md text-cream"></span>
             </span>
           )}
         </button>

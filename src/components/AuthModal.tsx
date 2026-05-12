@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { forgotPassword as apiForgotPassword } from "../api/auth";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -91,214 +92,232 @@ const AuthModal: React.FC<AuthModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-sm">
-        {loginRequired && (
-          <p className="text-red-600 font-bold mb-4 text-center">
-            You must login first to proceed to checkout.
-          </p>
-        )}
-        <h2 className="text-xl font-bold mb-4 text-center">
-          {isLogin ? "Login" : "Register"}
-        </h2>
-
-        {/* Alert Message */}
-        {alert && (
-          <div
-            role="alert"
-            className={`alert ${
-              alert.type === "success" ? "alert-success" : "alert-error"
-            } flex items-center gap-2 shadow-lg mb-4`}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 shrink-0 stroke-current"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d={
-                  alert.type === "success"
-                    ? "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    : "M6 18L18 6M6 6l12 12"
-                }
-              />
-            </svg>
-            <span>{alert.message}</span>
-          </div>
-        )}
-
-        {/* Forgot Password Form */}
-        {showForgot ? (
-          forgotSent ? (
-            <div className="text-center">
-              <button
-                className="btn-nav text-sm text-gray-500"
-                onClick={() => {
-                  setShowForgot(false);
-                  setForgotSent(false);
-                  setForgotEmail("");
-                  setAlert(null);
-                }}
-              >
-                Back to Login
-              </button>
+    <AnimatePresence>
+      <motion.div
+        className="fixed inset-0 bg-chocolate/30 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={onClose}
+      >
+        <motion.div
+          className="bg-cream rounded-2xl shadow-2xl w-full max-w-sm p-8"
+          initial={{ scale: 0.95, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.95, opacity: 0 }}
+          transition={{ type: "spring", stiffness: 300, damping: 25 }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {loginRequired && (
+            <div className="text-center mb-4 py-2 px-3 bg-warmGold/10 rounded-xl border border-warmGold/20">
+              <p className="text-sm text-chocolate font-medium">
+                Please login to proceed to checkout
+              </p>
             </div>
-          ) : (
-            <form onSubmit={handleForgotSubmit} className="flex flex-col gap-4">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                value={forgotEmail}
-                onChange={(e) => setForgotEmail(e.target.value)}
-                required
-                className="login-field"
-                disabled={loading}
-              />
-              {forgotError && (
-                <p className="text-red-500 text-sm">{forgotError}</p>
-              )}
-              <button
-                type="submit"
-                disabled={loading}
-                className="btn-nav flex items-center justify-center px-10 text-lg min-h-[48px] disabled:opacity-70"
+          )}
+
+          <h2 className="text-2xl font-seasons text-chocolate text-center mb-6">
+            {isLogin ? "Welcome Back" : "Create Account"}
+          </h2>
+
+          {/* Alert Message */}
+          {alert && (
+            <div
+              role="alert"
+              className={`alert ${
+                alert.type === "success" ? "alert-success" : "alert-error"
+              } flex items-center gap-2 shadow-lg mb-4 rounded-xl text-sm`}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 shrink-0 stroke-current"
+                fill="none"
+                viewBox="0 0 24 24"
               >
-                {loading ? (
-                  <span className="loading loading-spinner loading-md text-black"></span>
-                ) : (
-                  "Send Reset Link"
-                )}
-              </button>
-              <button
-                type="button"
-                className="text-sm text-gray-500 underline"
-                onClick={() => setShowForgot(false)}
-                disabled={loading}
-              >
-                Back to Login
-              </button>
-            </form>
-          )
-        ) : (
-          <>
-            {/* Login/Register Form */}
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-              {!isLogin && (
-                <>
-                  <input
-                    type="text"
-                    placeholder="First Name"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    required
-                    className="login-field"
-                    disabled={loading}
-                  />
-                  <input
-                    type="text"
-                    placeholder="Last Name"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    required
-                    className="login-field"
-                    disabled={loading}
-                  />
-                  <input
-                    type="tel"
-                    placeholder="Phone (optional)"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    className="login-field"
-                    disabled={loading}
-                  />
-                </>
-              )}
-              <input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="login-field"
-                disabled={loading}
-              />
-              <div className="relative">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d={
+                    alert.type === "success"
+                      ? "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                      : "M6 18L18 6M6 6l12 12"
+                  }
+                />
+              </svg>
+              <span>{alert.message}</span>
+            </div>
+          )}
+
+          {/* Forgot Password Form */}
+          {showForgot ? (
+            forgotSent ? (
+              <div className="text-center">
+                <button
+                  className="text-sm text-milkChocolate hover:text-chocolate transition-colors"
+                  onClick={() => {
+                    setShowForgot(false);
+                    setForgotSent(false);
+                    setForgotEmail("");
+                    setAlert(null);
+                  }}
+                >
+                  &larr; Back to Login
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleForgotSubmit} className="flex flex-col gap-4">
                 <input
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  type="email"
+                  placeholder="Enter your email"
+                  value={forgotEmail}
+                  onChange={(e) => setForgotEmail(e.target.value)}
                   required
-                  className="login-field w-full"
+                  className="login-field"
                   disabled={loading}
                 />
+                {forgotError && (
+                  <p className="text-red-500 text-sm">{forgotError}</p>
+                )}
                 <button
-                  type="button"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
-                  onClick={() => setShowPassword((v) => !v)}
-                  tabIndex={-1}
-                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  type="submit"
+                  disabled={loading}
+                  className="button-submit flex items-center justify-center min-h-[48px] disabled:opacity-70"
                 >
-                  {showPassword ? (
-                    <EyeSlashIcon className="h-5 w-5" />
+                  {loading ? (
+                    <span className="loading loading-spinner loading-md text-cream"></span>
                   ) : (
-                    <EyeIcon className="h-5 w-5" />
+                    "Send Reset Link"
                   )}
                 </button>
-              </div>
-              {/* Forgot Password Link */}
-              {isLogin && (
                 <button
                   type="button"
-                  className="text-xs text-blue-500 underline text-left w-fit"
-                  onClick={() => setShowForgot(true)}
+                  className="text-sm text-milkChocolate hover:text-chocolate transition-colors"
+                  onClick={() => setShowForgot(false)}
                   disabled={loading}
                 >
-                  Forgot password?
+                  &larr; Back to Login
                 </button>
-              )}
-              {localError && <p className="text-red-500 text-sm">{localError}</p>}
-              <button
-                type="submit"
-                disabled={loading}
-                className="btn-nav relative flex items-center justify-center px-10 text-lg min-h-[48px] disabled:opacity-70"
-              >
-                <span className={loading ? "invisible" : ""}>
-                  {isLogin ? "Login" : "Register"}
-                </span>
-                {loading && (
-                  <span className="absolute">
-                    <span className="loading loading-spinner loading-md text-black"></span>
-                  </span>
+              </form>
+            )
+          ) : (
+            <>
+              {/* Login/Register Form */}
+              <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+                {!isLogin && (
+                  <>
+                    <div className="grid grid-cols-2 gap-3">
+                      <input
+                        type="text"
+                        placeholder="First name"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        required
+                        className="login-field"
+                        disabled={loading}
+                      />
+                      <input
+                        type="text"
+                        placeholder="Last name"
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                        required
+                        className="login-field"
+                        disabled={loading}
+                      />
+                    </div>
+                    <input
+                      type="tel"
+                      placeholder="Phone (optional)"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      className="login-field"
+                      disabled={loading}
+                    />
+                  </>
                 )}
-              </button>
-            </form>
-            {/* Switch and Close buttons */}
-            <div className="mt-4 text-center">
-              <button
-                className="text-sm text-blue-500 underline"
-                onClick={() => setIsLogin(!isLogin)}
-                disabled={loading}
-              >
-                {isLogin ? "New user? Register" : "Already have an account? Login"}
-              </button>
-              <div className="mt-2">
+                <input
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="login-field"
+                  disabled={loading}
+                />
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    className="login-field w-full pr-10"
+                    disabled={loading}
+                  />
+                  <button
+                    type="button"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-whiteChocolate hover:text-milkChocolate transition-colors"
+                    onClick={() => setShowPassword((v) => !v)}
+                    tabIndex={-1}
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                  >
+                    {showPassword ? (
+                      <EyeSlashIcon className="h-4 w-4" />
+                    ) : (
+                      <EyeIcon className="h-4 w-4" />
+                    )}
+                  </button>
+                </div>
+                {isLogin && (
+                  <button
+                    type="button"
+                    className="text-xs text-warmGold hover:text-chocolate text-left w-fit transition-colors"
+                    onClick={() => setShowForgot(true)}
+                    disabled={loading}
+                  >
+                    Forgot password?
+                  </button>
+                )}
+                {localError && <p className="text-red-500 text-sm">{localError}</p>}
                 <button
-                  onClick={onClose}
-                  className="btn-nav text-sm text-gray-500"
+                  type="submit"
+                  disabled={loading}
+                  className="button-submit relative flex items-center justify-center min-h-[48px] mt-2 disabled:opacity-70"
+                >
+                  <span className={loading ? "invisible" : ""}>
+                    {isLogin ? "Sign In" : "Create Account"}
+                  </span>
+                  {loading && (
+                    <span className="absolute">
+                      <span className="loading loading-spinner loading-md text-cream"></span>
+                    </span>
+                  )}
+                </button>
+              </form>
+              <div className="mt-5 text-center space-y-2">
+                <button
+                  className="text-sm text-milkChocolate hover:text-chocolate transition-colors"
+                  onClick={() => setIsLogin(!isLogin)}
                   disabled={loading}
                 >
-                  Close
+                  {isLogin ? "New here? Create an account" : "Already have an account? Sign in"}
                 </button>
+                <div>
+                  <button
+                    onClick={onClose}
+                    className="text-xs text-whiteChocolate hover:text-milkChocolate transition-colors"
+                    disabled={loading}
+                  >
+                    Close
+                  </button>
+                </div>
               </div>
-            </div>
-          </>
-        )}
-      </div>
-    </div>
+            </>
+          )}
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
   );
 };
 
