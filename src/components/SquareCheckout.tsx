@@ -62,7 +62,7 @@ export const SquareCheckout = () => {
             Order Total
           </p>
           <h1 className="text-3xl font-seasons text-chocolate">
-            ${getTotalPrice().toFixed(2)}
+            <span className="font-bakery">$</span>{getTotalPrice().toFixed(2)}
           </h1>
           <p className="text-xs text-whiteChocolate mt-1">
             {totalQty === 0
