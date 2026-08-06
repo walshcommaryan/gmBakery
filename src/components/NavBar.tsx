@@ -9,6 +9,7 @@ import CheckoutPage from "../pages/CheckoutPage";
 import { MenuButton } from "./MenuButton";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingCartIcon } from "@heroicons/react/24/solid";
+import { ORDERING_ENABLED } from "../config/features";
 
 interface NavBarProps {
   showModal: boolean;
@@ -85,7 +86,8 @@ const NavBar: React.FC<NavBarProps> = ({
           <Link to="/location" className="btn-nav">
             Locations
           </Link>
-          {user ? (
+          {ORDERING_ENABLED &&
+            (user ? (
             <div className="relative group">
               <span className="btn-nav cursor-pointer">
                 {user.first_name}
@@ -109,8 +111,8 @@ const NavBar: React.FC<NavBarProps> = ({
             <button className="btn-nav" onClick={() => openLoginModal(false)}>
               Login
             </button>
-          )}
-          {user && getTotalQty() > 0 && (
+            ))}
+          {ORDERING_ENABLED && user && getTotalQty() > 0 && (
             <CheckOutButton
               openLoginModal={openLoginModal}
               openCheckoutModal={() => setIsCheckoutOpen(true)}
@@ -148,7 +150,8 @@ const NavBar: React.FC<NavBarProps> = ({
             >
               Locations
             </Link>
-            {user ? (
+            {ORDERING_ENABLED &&
+              (user ? (
               <>
                 <Link
                   to="/order-history"
@@ -177,8 +180,8 @@ const NavBar: React.FC<NavBarProps> = ({
               >
                 Login
               </button>
-            )}
-            {user && getTotalQty() > 0 && (
+              ))}
+            {ORDERING_ENABLED && user && getTotalQty() > 0 && (
               <CheckOutButton
                 openLoginModal={openLoginModal}
                 openCheckoutModal={() => {
@@ -193,7 +196,7 @@ const NavBar: React.FC<NavBarProps> = ({
 
       {/* Floating Cart Icon */}
       <AnimatePresence>
-        {getTotalQty() > 0 && (
+        {ORDERING_ENABLED && getTotalQty() > 0 && (
           <motion.button
             key="cart-icon"
             initial={{ opacity: 0, scale: 0.8, y: 20 }}
@@ -222,17 +225,19 @@ const NavBar: React.FC<NavBarProps> = ({
       </AnimatePresence>
 
       {/* Modals */}
-      <AuthModal
-        isOpen={showModal}
-        onClose={() => {
-          setShowModal(false);
-          setLoginRequired(false);
-        }}
-        loginRequired={loginRequired}
-      />
+      {ORDERING_ENABLED && (
+        <AuthModal
+          isOpen={showModal}
+          onClose={() => {
+            setShowModal(false);
+            setLoginRequired(false);
+          }}
+          loginRequired={loginRequired}
+        />
+      )}
 
       <AnimatePresence>
-        {isCheckoutOpen && (
+        {ORDERING_ENABLED && isCheckoutOpen && (
           <CheckoutModal onClose={() => setIsCheckoutOpen(false)}>
             <CheckoutPage onClose={() => setIsCheckoutOpen(false)} />
           </CheckoutModal>

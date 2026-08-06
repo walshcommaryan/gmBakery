@@ -6,8 +6,10 @@ import { useProducts } from "../context/ProductContext";
 import CheckoutModal from "../components/CheckoutModal";
 import CheckOutPage from "./CheckoutPage";
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { ORDERING_ENABLED } from "../config/features";
+import { CONTACT_EMAIL } from "../data/ContactHelper";
 
 const HomePage = () => {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
@@ -18,6 +20,9 @@ const HomePage = () => {
   const location = useLocation();
 
   useEffect(() => {
+    // Old reset-password emails deep link here; ignore them while ordering is off.
+    if (!ORDERING_ENABLED) return;
+
     const params = new URLSearchParams(location.search);
     if (params.get("login") === "true") {
       setShowModal(true);
@@ -69,11 +74,23 @@ const HomePage = () => {
             <div className="w-12 h-[1px] bg-warmGold" />
           </div>
           <h2 className="text-4xl sm:text-5xl font-seasons text-chocolate">
-            Order
+            {ORDERING_ENABLED ? "Order" : "Our Menu"}
           </h2>
           <p className="text-sm tracking-wide text-milkChocolate mt-2">
-            For pick up only
+            {ORDERING_ENABLED
+              ? "For pick up only"
+              : "Online ordering is coming soon"}
           </p>
+          {!ORDERING_ENABLED && (
+            <div className="flex flex-wrap items-center justify-center gap-3 mt-6">
+              <Link to="/location" className="btn-primary text-xs">
+                Find us at a market
+              </Link>
+              <a href={`mailto:${CONTACT_EMAIL}`} className="btn-nav">
+                Email us
+              </a>
+            </div>
+          )}
         </motion.div>
 
         <ProductGrid items={products} columns={4} />
@@ -94,7 +111,7 @@ const HomePage = () => {
       </footer>
 
       <AnimatePresence>
-        {isCheckoutOpen && (
+        {ORDERING_ENABLED && isCheckoutOpen && (
           <CheckoutModal onClose={() => setIsCheckoutOpen(false)}>
             <CheckOutPage onClose={() => setIsCheckoutOpen(false)} />
           </CheckoutModal>

@@ -11,6 +11,7 @@ import {
   getMe,
   logout as apiLogout,
 } from "../api/auth";
+import { ORDERING_ENABLED } from "../config/features";
 
 interface User {
   customer_id: number;
@@ -45,6 +46,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   // Load user on app start (check if logged in)
   useEffect(() => {
+    // Ordering off: nobody can sign in, so skip the token bootstrap entirely.
+    if (!ORDERING_ENABLED) {
+      setLoading(false);
+      return;
+    }
+
     getMe()
       .then((res) => {
         setUser(res.data);

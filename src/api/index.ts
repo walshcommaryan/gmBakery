@@ -1,8 +1,18 @@
 import axios from "axios";
+import { ORDERING_ENABLED } from "../config/features";
 
 const api = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
   withCredentials: true,
+});
+
+// Safety net: with ordering off the API host no longer resolves, so reject
+// before anything hits the network rather than letting a stray call hang.
+api.interceptors.request.use((config) => {
+  if (!ORDERING_ENABLED) {
+    return Promise.reject(new Error("Ordering is disabled"));
+  }
+  return config;
 });
 
 // Add response interceptor

@@ -1,5 +1,6 @@
 import React, { useRef, useCallback } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { ORDERING_ENABLED } from "../config/features";
 
 const PROXIMITY = 175;
 const NUDGE_STRENGTH = 28;
@@ -182,13 +183,13 @@ const Hero = () => {
       <motion.button
         onClick={handleScrollToOrder}
         className="hidden sm:flex absolute left-1/2 bottom-10 -translate-x-1/2 flex-col items-center group z-20"
-        aria-label="Scroll to Order section"
+        aria-label={ORDERING_ENABLED ? "Scroll to Order section" : "Scroll to Menu section"}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 0.6 }}
       >
         <span className="text-sm font-medium tracking-[0.2em] uppercase text-milkChocolate group-hover:text-chocolate transition-colors">
-          Order
+          {ORDERING_ENABLED ? "Order" : "Menu"}
         </span>
         <svg
           className="w-6 h-6 text-milkChocolate group-hover:text-chocolate animate-bounce mt-1 transition-colors"

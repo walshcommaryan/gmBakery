@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { sendEmail } from "../api/Notification";
 import { AnimatePresence, motion } from "framer-motion";
+import { ORDERING_ENABLED } from "../config/features";
+import { CONTACT_EMAIL } from "../data/ContactHelper";
 
 const ContactSection = () => {
   const [form, setForm] = useState({
@@ -31,6 +33,33 @@ const ContactSection = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // No API to post to while ordering is off, so hand the message to the
+    // visitor's mail client rather than letting it fail silently.
+    if (!ORDERING_ENABLED) {
+      const body = [
+        `Name: ${form.name}`,
+        `Email: ${form.email}`,
+        form.phone && `Phone: ${form.phone}`,
+        "",
+        form.message,
+      ]
+        .filter(Boolean)
+        .join("\n");
+
+      window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
+        form.subject || "Website enquiry",
+      )}&body=${encodeURIComponent(body)}`;
+
+      // mailto: is a silent no-op when no mail client is registered, so always
+      // surface the address too rather than leaving the click with no feedback.
+      setAlert({
+        type: "success",
+        message: `Opening your email app. If nothing happens, write to ${CONTACT_EMAIL}.`,
+      });
+      return;
+    }
+
     setIsLoading(true);
     setAlert(null);
 
@@ -70,6 +99,17 @@ const ContactSection = () => {
             Need catering services? We'd love to be part of your event. Let us
             know here.
           </p>
+          {!ORDERING_ENABLED && (
+            <p className="section-description">
+              Or email us directly at{" "}
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="text-warmGold hover:underline"
+              >
+                {CONTACT_EMAIL}
+              </a>
+            </p>
+          )}
         </motion.div>
 
         <AnimatePresence>
@@ -177,7 +217,9 @@ const ContactSection = () => {
               disabled={isLoading}
               className="relative button-submit min-h-[48px] min-w-[160px] flex items-center justify-center disabled:opacity-70"
             >
-              <span className={isLoading ? "invisible" : ""}>Send Message</span>
+              <span className={isLoading ? "invisible" : ""}>
+                {ORDERING_ENABLED ? "Send Message" : "Compose Email"}
+              </span>
               {isLoading && (
                 <span className="absolute">
                   <span className="loading loading-spinner loading-md text-cream" />
